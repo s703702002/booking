@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Select from './Select'
+import { Row } from './Grid'
 import { formatDate } from './utils'
 
 // API spec: https://ptx.transportdata.tw/MOTC?t=Rail&v=2#!/THSR/THSRApi_DailyTimetable
@@ -47,24 +48,63 @@ function App() {
   }, [])
   return (
     <div className="App">
-      <div className='search_panel'>
-        <div>
-          <label htmlFor="trip-start">日期:</label>
-          <input
-            type="date"
-            id="trip-start"
-            value={date}
-            onChange={(e) => setDate(e.currentTarget.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="OrginStation">起站:</label>
-          <Select name="OrginStation" id="OrginStation" options={stationOptions}/>
-        </div>
-        <div>
-          <label htmlFor="DestinationStation">迄站:</label>
-          <Select name="DestinationStation" id="DestinationStation" options={stationOptions}/>
-        </div>
+      <header>
+        <h1>高鐵查詢系統</h1>
+      </header>
+      <div className='search_panel container-fluid'>
+        <Row>
+          <label htmlFor="trip-start" className="col-1 col-form-label">日期:</label>
+          <div className="col-11">
+            <input
+              class="form-control"
+              type="date"
+              id="trip-start"
+              value={date}
+              onChange={(e) => setDate(e.currentTarget.value)}
+            />
+          </div>
+        </Row>
+        <Row>
+          <label htmlFor="OrginStation" className="col-1 col-form-label">起站:</label>
+          <div className="col-11">
+            <Select
+              class="form-control"
+              name="OrginStation"
+              id="OrginStation"
+              options={stationOptions}
+            />
+          </div>
+        </Row>
+        <Row>
+          <label htmlFor="DestinationStation" className="col-1 col-form-label">迄站:</label>
+          <div className="col-11">
+            <Select 
+              class="form-control" 
+              name="DestinationStation"
+              id="DestinationStation"
+              options={stationOptions}
+            />
+          </div>
+        </Row>  
+        <button type="button" className="btn btn-primary btn-lg btn-block">查詢</button>
+      </div>
+      <div>
+        <table className="result_table">
+          <thead>
+            <tr>
+              <td>車次</td>
+              <td>起站</td>
+              <td>迄站</td>
+              <td>發車時間</td>
+              <td>到達時間</td>
+              <td>總時程</td>
+              <td>票價資訊</td>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
       </div>
       <footer>
         <p>更新時間: {updateTime}</p>
