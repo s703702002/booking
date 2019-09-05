@@ -13,10 +13,16 @@ export function Label({
   children
 }) {
   return (
-    <label htmlFor={htmlFor} className="col-3 col-form-label">{children}</label>
+    <label htmlFor={htmlFor} className="col-3 col-form-label">
+      {children}
+    </label>
   )
 }
 
-export function FormField({ children }) {
-  return (<div className="col-9">{children}</div>)
-}
+export const FormField = React.memo(({ children }) => {
+  return (
+    <div className="col-9">
+      {children}
+    </div>
+  )
+})

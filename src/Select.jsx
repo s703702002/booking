@@ -1,20 +1,19 @@
 import React from 'react'
 
-const Select = ({
-  id,
-  name,
+const Select = React.memo(({
   options,
   ...props
 }) => {
   return (
-    <select name={name} id={id} {...props}>
+    <select {...props}>
       {
-        options.map(e => (
-          <option key={e.value} value={e.value}>{e.Zh_tw + e.En}</option>
-        ))
+        options.length > 0 ?
+          options.map(e => (
+            <option key={e.value} value={e.value}>{e.Zh_tw + e.En}</option>
+          )) : <option value="">請選擇</option>
       }
     </select>
   )
-}
+})
 
 export default Select
