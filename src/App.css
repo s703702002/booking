@@ -15,17 +15,14 @@ img {
 }
 
 .search_panel {
-  background-color: #e9e9e9;
+  box-shadow: 1px 1px 5px #ddd;
+  background-color: #f3f3f3;
   border-color: #ddd;
   color: #333;
   text-shadow: 0 1px 0 #eee;
   padding-top: .5em;
   padding-bottom: .5em;
   margin-bottom: .5em;
-}
-
-.change_btn {
-  width: 20%;
 }
 
 .asc,
@@ -35,6 +32,16 @@ img {
 
 .result_table {
   width: 100%;
+}
+
+.prize_table {
+  width: 100%;
+  background-color: #aeeff9;
+}
+
+.prize_table th,
+.prize_table td {
+  padding: .3em;
 }
 
 .result_table td {
