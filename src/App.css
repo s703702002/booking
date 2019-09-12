@@ -25,29 +25,6 @@ img {
   margin-bottom: .5em;
 }
 
-.asc,
-.desc {
-  width: 20px;
-}
-
-.result_table {
-  width: 100%;
-}
-
-.prize_table {
-  width: 100%;
-  background-color: #aeeff9;
-}
-
-.prize_table th,
-.prize_table td {
-  padding: .3em;
-}
-
-.result_table td {
-  vertical-align: middle;
-}
-
 footer {
   background-color: #4d4d4d;
   color: #fff;

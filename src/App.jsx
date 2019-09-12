@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./App.css";
-import Select from "./Select";
-import { Row, Label, FormField } from "./Grid";
+import Select from "./components/Select";
+import { Row, Label, FormField, ResultRow, EmptyRow } from "./components/Grid";
 import { formatDate } from "./utils";
-import { Desc, Asc } from "./Icons";
+import { Desc, Asc } from "./components/Icons";
+
+import ResultTable from "./components/ResultTable";
+import PrizeTable from "./components/PrizeTable";
 
 // API spec: https://ptx.transportdata.tw/MOTC?t=Rail&v=2#!/THSR/THSRApi_DailyTimetable
 const API_BASE = "https://ptx.transportdata.tw/MOTC";
@@ -86,7 +89,7 @@ function App() {
         console.log("error", err);
       });
   }, []);
-  console.log("prizeList", prizeList);
+
   return (
     <div className="App">
       <header>
@@ -150,6 +153,7 @@ function App() {
               .then(res => res.json())
               .then(data => {
                 console.log("data", data);
+                setResultList(data);
               })
               .catch(err => console.log(err));
             searchPriceByStation(departure, arrival)
@@ -162,12 +166,11 @@ function App() {
         </button>
       </div>
       <div className="container">
-        <table className="result_table">
+        <ResultTable>
           <thead>
             <tr>
-              <td>車次</td>
-              <td>起迄站</td>
-              <td
+              <th>車次</th>
+              <th
                 className="pointer"
                 onClick={() =>
                   setDeaprtureState(sortByDeparture === "desc" ? "asc" : "desc")
@@ -175,8 +178,8 @@ function App() {
               >
                 發車
                 {sortByDeparture === "desc" ? <Desc /> : <Asc />}
-              </td>
-              <td
+              </th>
+              <th
                 className="pointer"
                 onClick={() =>
                   setArrivalState(sortByArrival === "desc" ? "asc" : "desc")
@@ -184,17 +187,29 @@ function App() {
               >
                 到達
                 {sortByArrival === "desc" ? <Desc /> : <Asc />}
-              </td>
-              <td>總時程</td>
+              </th>
+              <th>總時程</th>
             </tr>
           </thead>
-          <tbody></tbody>
-        </table>
-        {!resultList.length && <p>尚無資料</p>}
-        <div>
-          <h3>票價資訊</h3>
-          {prizeList.length > 0 ? (
-            <table className="prize_table">
+          <tbody>
+            {resultList.length > 0 ? (
+              resultList.map(val => (
+                <ResultRow
+                  key={val.DailyTrainInfo.TrainNo}
+                  TrainNo={val.DailyTrainInfo.TrainNo}
+                  DepartureTime={val.OriginStopTime.DepartureTime}
+                  ArrivalTime={val.DestinationStopTime.ArrivalTime}
+                />
+              ))
+            ) : (
+              <EmptyRow />
+            )}
+          </tbody>
+        </ResultTable>
+        {prizeList.length > 0 ? (
+          <div className="mt-3">
+            <h3>票價資訊</h3>
+            <PrizeTable>
               <thead>
                 <tr>
                   <th colSpan="3">
@@ -213,9 +228,9 @@ function App() {
                   ))}
                 </tr>
               </tbody>
-            </table>
-          ) : null}
-        </div>
+            </PrizeTable>
+          </div>
+        ) : null}
       </div>
       <footer>
         <p>更新時間: {updateTime}</p>
