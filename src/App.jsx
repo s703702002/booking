@@ -2,10 +2,9 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./App.css";
 import Select from "./components/Select";
 import { Row, Label, FormField } from "./components/Grid";
-import { formatDate } from "./utils";
-import { Desc, Asc } from "./components/Icons";
+import { formatDate, timesToMins } from "./utils";
 
-import ResultTable, { ResultRow, EmptyRow } from "./components/ResultTable";
+import ResultTable from "./components/ResultTable";
 import PrizeTable from "./components/PrizeTable";
 
 // API spec: https://ptx.transportdata.tw/MOTC?t=Rail&v=2#!/THSR/THSRApi_DailyTimetable
@@ -77,7 +76,25 @@ function App() {
       .then(res => res.json())
       .then(data => setPrizeList(data[0].Fares))
       .catch(err => console.log(err));
-  }, []);
+  }, [departure, arrival, date]);
+
+  const departureSortClick = useCallback(() => {
+    setDeaprtureState(sortByDeparture === "desc" ? "asc" : "desc");
+    resultList.sort((a, b) => {
+      const aMins = timesToMins(a.OriginStopTime.DepartureTime);
+      const bMins = timesToMins(b.OriginStopTime.DepartureTime);
+      return sortByDeparture === "desc" ? aMins - bMins : bMins - aMins;
+    });
+  }, [sortByDeparture, resultList]);
+
+  const arrivalSortClick = useCallback(() => {
+    setArrivalState(sortByArrival === "desc" ? "asc" : "desc");
+    resultList.sort((a, b) => {
+      const aMins = timesToMins(a.DestinationStopTime.ArrivalTime);
+      const bMins = timesToMins(b.DestinationStopTime.ArrivalTime);
+      return sortByArrival === "desc" ? aMins - bMins : bMins - aMins;
+    });
+  }, [sortByArrival, resultList]);
 
   useEffect(() => {
     getODFARE()
@@ -167,70 +184,19 @@ function App() {
         </button>
       </div>
       <div className="container">
-        <ResultTable>
-          <thead>
-            <tr>
-              <th>車次</th>
-              <th
-                className="pointer"
-                onClick={() =>
-                  setDeaprtureState(sortByDeparture === "desc" ? "asc" : "desc")
-                }
-              >
-                發車
-                {sortByDeparture === "desc" ? <Desc /> : <Asc />}
-              </th>
-              <th
-                className="pointer"
-                onClick={() =>
-                  setArrivalState(sortByArrival === "desc" ? "asc" : "desc")
-                }
-              >
-                到達
-                {sortByArrival === "desc" ? <Desc /> : <Asc />}
-              </th>
-              <th>總時程</th>
-            </tr>
-          </thead>
-          <tbody>
-            {resultList.length > 0 ? (
-              resultList.map(val => (
-                <ResultRow
-                  key={val.DailyTrainInfo.TrainNo}
-                  TrainNo={val.DailyTrainInfo.TrainNo}
-                  DepartureTime={val.OriginStopTime.DepartureTime}
-                  ArrivalTime={val.DestinationStopTime.ArrivalTime}
-                />
-              ))
-            ) : (
-              <EmptyRow />
-            )}
-          </tbody>
-        </ResultTable>
+        <ResultTable
+          sortByDeparture={sortByDeparture}
+          sortByArrival={sortByArrival}
+          resultList={resultList}
+          onClickDepartureSort={departureSortClick}
+          onClickArrivalSort={arrivalSortClick}
+        />
         {prizeList.length > 0 ? (
-          <div className="mt-3">
-            <h3>票價資訊</h3>
-            <PrizeTable>
-              <thead>
-                <tr>
-                  <th colSpan="3">
-                    {departureRef.current.selectedOptions[0].textContent}
-                    <span className="ml-2 mr-2">&rarr;</span>
-                    {arrivalRef.current.selectedOptions[0].textContent}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  {prizeList.map(v => (
-                    <td key={v.Price}>
-                      {v.TicketType}:<strong>&#36;{v.Price}</strong>
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </PrizeTable>
-          </div>
+          <PrizeTable
+            prizeList={prizeList}
+            departure={departureRef.current.selectedOptions[0].textContent}
+            arrival={arrivalRef.current.selectedOptions[0].textContent}
+          />
         ) : null}
       </div>
       <footer>
