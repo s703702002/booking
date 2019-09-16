@@ -26,24 +26,3 @@ export const FormField = React.memo(({ children }) => {
     </div>
   )
 })
-
-export const ResultRow = ({
-  TrainNo,
-  DepartureTime,
-  ArrivalTime
-}) => {
-  return (
-    <tr>
-      <td>{TrainNo}</td>
-      <td>{DepartureTime}</td>
-      <td>{ArrivalTime}</td>
-      <td>11:11</td>
-    </tr>
-  )
-}
-
-export const EmptyRow = () => (
-  <tr>
-    <td colSpan="4">尚無資料</td>
-  </tr>
-)

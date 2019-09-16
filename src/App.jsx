@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./App.css";
 import Select from "./components/Select";
-import { Row, Label, FormField, ResultRow, EmptyRow } from "./components/Grid";
+import { Row, Label, FormField } from "./components/Grid";
 import { formatDate } from "./utils";
 import { Desc, Asc } from "./components/Icons";
 
-import ResultTable from "./components/ResultTable";
+import ResultTable, { ResultRow, EmptyRow } from "./components/ResultTable";
 import PrizeTable from "./components/PrizeTable";
 
 // API spec: https://ptx.transportdata.tw/MOTC?t=Rail&v=2#!/THSR/THSRApi_DailyTimetable
@@ -65,6 +65,19 @@ function App() {
     setDeparture(currentA);
     setArrival(currentD);
   }, [departure, arrival]);
+
+  const searchClick = useCallback(() => {
+    searchTrain(departure, arrival, date)
+      .then(res => res.json())
+      .then(data => {
+        setResultList(data);
+      })
+      .catch(err => console.log(err));
+    searchPriceByStation(departure, arrival)
+      .then(res => res.json())
+      .then(data => setPrizeList(data[0].Fares))
+      .catch(err => console.log(err));
+  }, []);
 
   useEffect(() => {
     getODFARE()
@@ -148,19 +161,7 @@ function App() {
         <button
           type="button"
           className="btn btn-primary btn-lg btn-block"
-          onClick={() => {
-            searchTrain(departure, arrival, date)
-              .then(res => res.json())
-              .then(data => {
-                console.log("data", data);
-                setResultList(data);
-              })
-              .catch(err => console.log(err));
-            searchPriceByStation(departure, arrival)
-              .then(res => res.json())
-              .then(data => setPrizeList(data[0].Fares))
-              .catch(err => console.log(err));
-          }}
+          onClick={searchClick}
         >
           查詢
         </button>

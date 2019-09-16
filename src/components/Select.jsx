@@ -2,7 +2,6 @@ import React from "react";
 
 const Select = React.memo(
   React.forwardRef(({ options, ...props }, ref) => {
-    console.log("render");
     return (
       <select {...props} ref={ref}>
         {options.length > 0 ? (
