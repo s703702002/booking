@@ -13,7 +13,7 @@ export function Label({
   children
 }) {
   return (
-    <label htmlFor={htmlFor} className="col-3 col-form-label">
+    <label htmlFor={htmlFor} className="col-4 col-form-label text-left">
       {children}
     </label>
   )
@@ -21,7 +21,7 @@ export function Label({
 
 export const FormField = React.memo(({ children }) => {
   return (
-    <div className="col-9">
+    <div className="col">
       {children}
     </div>
   )

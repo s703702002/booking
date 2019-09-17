@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  padding-bottom: 5em;
 }
 
 p {
@@ -19,6 +20,10 @@ img {
   padding-top: .5em;
   padding-bottom: .5em;
   margin-bottom: .5em;
+}
+
+.col-form-label {
+  max-width: 7em;
 }
 
 footer {

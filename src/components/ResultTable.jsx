@@ -5,6 +5,7 @@ import { Desc, Asc } from "./Icons";
 
 const StyledTable = styled.table`
   width: 100%;
+  box-shadow: 0px 3px 10px #ddd;
   thead {
     background-color: #eee;
   }
@@ -33,7 +34,7 @@ export const ResultRow = React.memo(({
   const Amins = timesToMins(ArrivalTime)
   return (
     <tr>
-      <td>{TrainNo}</td>
+      <td className="text-info font-weight-bold">{TrainNo}</td>
       <td>{DepartureTime}</td>
       <td>{ArrivalTime}</td>
       <td>{minsToTimes(Amins - Dmins)}</td>

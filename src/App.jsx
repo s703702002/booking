@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./App.css";
-import Select from "./components/Select";
+import Select, { TimeSelect } from "./components/Select";
 import { Row, Label, FormField } from "./components/Grid";
 import { formatDate, timesToMins } from "./utils";
 
@@ -47,6 +47,8 @@ function App() {
   const arrivalRef = useRef();
   const [resultList, setResultList] = useState([]);
   const [prizeList, setPrizeList] = useState([]);
+  const [departureTime, setDepartureTime] = useState("08:00");
+  const [arriveTime, setArriveTime] = useState("17:00");
 
   const changeDeparture = useCallback(
     e => setDeparture(e.currentTarget.value),
@@ -58,24 +60,29 @@ function App() {
   ]);
 
   const DepArrChange = useCallback(() => {
-    const currentD = departure;
-    const currentA = arrival;
-    setDeparture(currentA);
-    setArrival(currentD);
+    setDeparture(arrival);
+    setArrival(departure);
   }, [departure, arrival]);
 
   const searchClick = useCallback(() => {
     searchTrain(departure, arrival, date)
       .then(res => res.json())
       .then(data => {
-        setResultList(data);
+        const depFilterTime = timesToMins(departureTime);
+        const arrFilterTime = timesToMins(arriveTime);
+        const filteredData = data.filter(d => {
+          const depTime = timesToMins(d.OriginStopTime.DepartureTime);
+          const arrTime = timesToMins(d.DestinationStopTime.ArrivalTime);
+          return depTime > depFilterTime && arrTime < arrFilterTime;
+        });
+        setResultList(filteredData);
       })
       .catch(err => console.log(err));
     searchPriceByStation(departure, arrival)
       .then(res => res.json())
       .then(data => setPrizeList(data[0].Fares))
       .catch(err => console.log(err));
-  }, [departure, arrival, date]);
+  }, [departure, arrival, date, departureTime, arriveTime]);
 
   const departureSortClick = useCallback(() => {
     setDeaprtureState(sortByDeparture === "desc" ? "asc" : "desc");
@@ -95,6 +102,14 @@ function App() {
     });
   }, [sortByArrival, resultList]);
 
+  const changeTime = useCallback(e => {
+    if (e.currentTarget.id === "DepartureTime") {
+      setDepartureTime(e.currentTarget.value);
+    } else {
+      setArriveTime(e.currentTarget.value);
+    }
+  }, []);
+
   useEffect(() => {
     getStations()
       .then(res => res.json())
@@ -104,7 +119,7 @@ function App() {
           ...val.StationName
         }));
         setStationOptions(stations);
-        setUpdateTime(stations[0].UpdateTime);
+        setUpdateTime(data[0].UpdateTime);
       })
       .catch(err => console.log(err));
   }, []);
@@ -116,7 +131,7 @@ function App() {
       </header>
       <div className="search_panel container">
         <Row>
-          <Label htmlFor="trip-start">日期:</Label>
+          <Label htmlFor="trip-start">日期</Label>
           <FormField>
             <input
               className="form-control"
@@ -128,7 +143,7 @@ function App() {
           </FormField>
         </Row>
         <Row>
-          <Label htmlFor="OrginStation">起站:</Label>
+          <Label htmlFor="OrginStation">起站</Label>
           <FormField>
             <Select
               className="form-control"
@@ -151,7 +166,7 @@ function App() {
           </button>
         </div>
         <Row>
-          <Label htmlFor="DestinationStation">迄站:</Label>
+          <Label htmlFor="DestinationStation">迄站</Label>
           <FormField>
             <Select
               className="form-control"
@@ -161,6 +176,30 @@ function App() {
               value={arrival}
               onChange={changeArrival}
               ref={arrivalRef}
+            />
+          </FormField>
+        </Row>
+        <Row>
+          <Label htmlFor="DepartureTime">最早出發</Label>
+          <FormField>
+            <TimeSelect
+              className="form-control"
+              name="DepartureTime"
+              id="DepartureTime"
+              value={departureTime}
+              onChange={changeTime}
+            />
+          </FormField>
+        </Row>
+        <Row>
+          <Label htmlFor="ArriveTime">最晚抵達</Label>
+          <FormField>
+            <TimeSelect
+              className="form-control"
+              name="ArriveTime"
+              id="ArriveTime"
+              value={arriveTime}
+              onChange={changeTime}
             />
           </FormField>
         </Row>
@@ -188,7 +227,7 @@ function App() {
           />
         ) : null}
       </div>
-      <footer>
+      <footer className="fixed-bottom">
         <p>更新時間: {updateTime}</p>
       </footer>
     </div>
