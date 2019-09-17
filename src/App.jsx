@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./App.css";
 import Select, { TimeSelect } from "./components/Select";
 import { Row, Label, FormField } from "./components/Grid";
-import { formatDate, timesToMins } from "./utils";
+import { formatDate, timesToMins, getDefaultHour } from "./utils";
 
 import ResultTable from "./components/ResultTable";
 import PrizeTable from "./components/PrizeTable";
@@ -35,6 +35,8 @@ function getStations() {
   return fetch(API_BASE + API_ODFARE, fetchOptions);
 }
 
+const { defaultDepTime, defaultArrTime } = getDefaultHour();
+
 function App() {
   const [updateTime, setUpdateTime] = useState("");
   const [stationOptions, setStationOptions] = useState([]);
@@ -47,8 +49,8 @@ function App() {
   const arrivalRef = useRef();
   const [resultList, setResultList] = useState([]);
   const [prizeList, setPrizeList] = useState([]);
-  const [departureTime, setDepartureTime] = useState("08:00");
-  const [arriveTime, setArriveTime] = useState("17:00");
+  const [departureTime, setDepartureTime] = useState(defaultDepTime);
+  const [arriveTime, setArriveTime] = useState(defaultArrTime);
 
   const changeDeparture = useCallback(
     e => setDeparture(e.currentTarget.value),
