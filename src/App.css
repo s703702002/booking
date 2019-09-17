@@ -10,10 +10,6 @@ img {
   max-width: 100%;
 }
 
-.pointer {
-  cursor: pointer;
-}
-
 .search_panel {
   box-shadow: 1px 1px 5px #ddd;
   background-color: #f3f3f3;

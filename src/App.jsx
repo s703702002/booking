@@ -9,7 +9,6 @@ import PrizeTable from "./components/PrizeTable";
 
 // API spec: https://ptx.transportdata.tw/MOTC?t=Rail&v=2#!/THSR/THSRApi_DailyTimetable
 const API_BASE = "https://ptx.transportdata.tw/MOTC";
-// const API_TODAY = '/v2/Rail/THSR/DailyTimetable/Today' // GET 取得當天所有車次的時刻表資料
 
 const fetchOptions = {
   method: "GET",
@@ -31,8 +30,8 @@ function searchPriceByStation(OriginStationID, DestinationStationID) {
   return fetch(API_BASE + API_PRICE, fetchOptions);
 }
 
-function getODFARE() {
-  const API_ODFARE = "/v2/Rail/THSR/ODFare"; // GET 取得票價資料
+function getStations() {
+  const API_ODFARE = "/v2/Rail/THSR/Station"; // GET 取得車站基本資料
   return fetch(API_BASE + API_ODFARE, fetchOptions);
 }
 
@@ -97,27 +96,17 @@ function App() {
   }, [sortByArrival, resultList]);
 
   useEffect(() => {
-    getODFARE()
+    getStations()
       .then(res => res.json())
       .then(data => {
-        const stations = {};
-        data.forEach(element => {
-          const stationsId = element.OriginStationID;
-          if (!stations[stationsId]) {
-            stations[stationsId] = element.OriginStationName;
-          }
-        });
-        setStationOptions(
-          Object.entries(stations).map(e => ({
-            value: e[0],
-            ...e[1]
-          }))
-        );
-        setUpdateTime(data[0].UpdateTime);
+        const stations = data.map(val => ({
+          value: val.StationID,
+          ...val.StationName
+        }));
+        setStationOptions(stations);
+        setUpdateTime(stations[0].UpdateTime);
       })
-      .catch(err => {
-        console.log("error", err);
-      });
+      .catch(err => console.log(err));
   }, []);
 
   return (

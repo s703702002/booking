@@ -3,21 +3,25 @@ import styled from 'styled-components'
 import { minsToTimes, timesToMins } from '../utils'
 import { Desc, Asc } from "./Icons";
 
-const Table = styled.table`
+const StyledTable = styled.table`
   width: 100%;
   thead {
     background-color: #eee;
   }
-  th,td {
+  td {
     padding: .3em;
     vertical-align: middle;
-  }
-  th {
-    font-weight: bold;
   }
   tr:nth-child(even) {
     background-color: #eee;
   }
+`;
+
+const StyledTh = styled.th`
+  padding: .3em;
+  vertical-align: middle;
+  font-weight: bold;
+  cursor: ${props => props.pointer ? 'pointer' : 'initial'};
 `;
 
 export const ResultRow = React.memo(({
@@ -51,25 +55,25 @@ const ResultTable = React.memo(({
   onClickArrivalSort
 }) => {
   return (
-    <Table>
+    <StyledTable>
       <thead>
         <tr>
-          <th>車次</th>
-          <th
-            className="pointer"
+          <StyledTh>車次</StyledTh>
+          <StyledTh
+            pointer
             onClick={onClickDepartureSort}
           >
             發車
             {sortByDeparture === "desc" ? <Desc /> : <Asc />}
-          </th>
-          <th
-            className="pointer"
+          </StyledTh>
+          <StyledTh
+            pointer
             onClick={onClickArrivalSort}
           >
             到達
             {sortByArrival === "desc" ? <Desc /> : <Asc />}
-          </th>
-          <th>總時程</th>
+          </StyledTh>
+          <StyledTh>總時程</StyledTh>
         </tr>
       </thead>
       <tbody>
@@ -86,7 +90,7 @@ const ResultTable = React.memo(({
           <EmptyRow />
         )}
       </tbody>
-    </Table>
+    </StyledTable>
   )
 })
 

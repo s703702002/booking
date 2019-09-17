@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Table = styled.table`
+const StyledTable = styled.table`
   width: 100%;
   background-color: #aeeff9;
   th, td {
@@ -13,7 +13,7 @@ const PrizeTable = ({ prizeList, departure, arrival }) => {
   return (
     <div className="mt-3 mb-3">
       <h3>票價資訊</h3>
-      <Table>
+      <StyledTable>
         <thead>
           <tr>
             <th colSpan="3">
@@ -32,7 +32,7 @@ const PrizeTable = ({ prizeList, departure, arrival }) => {
             ))}
           </tr>
         </tbody>
-      </Table>
+      </StyledTable>
     </div>
   )
 }
