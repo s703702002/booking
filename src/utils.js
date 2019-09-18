@@ -31,7 +31,7 @@ export function minsToTimes(mins) {
 }
 
 export function getDefaultHour() {
-  let dep = new Date().getHours();
+  let dep = new Date().getHours() + 1;
   let arr = dep + 3;
   dep = prefixZero(dep.toString()) + ":00";
   arr = prefixZero(arr.toString()) + ":00";

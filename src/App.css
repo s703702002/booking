@@ -11,21 +11,6 @@ img {
   max-width: 100%;
 }
 
-.search_panel {
-  box-shadow: 1px 1px 5px #ddd;
-  background-color: #f3f3f3;
-  border-color: #ddd;
-  color: #333;
-  text-shadow: 0 1px 0 #eee;
-  padding-top: .5em;
-  padding-bottom: .5em;
-  margin-bottom: .5em;
-}
-
-.col-form-label {
-  max-width: 7em;
-}
-
 footer {
   background-color: #4d4d4d;
   color: #fff;
