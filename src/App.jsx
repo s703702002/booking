@@ -5,6 +5,7 @@ import { timesToMins } from "./utils";
 
 import ResultTable from "./components/ResultTable";
 import PrizeTable from "./components/PrizeTable";
+import StyledGoTop from "./components/GoTop";
 
 import StyledSeachForm, { useSearchForm } from "./components/SearchForm";
 
@@ -140,6 +141,7 @@ function App() {
       <footer className="fixed-bottom">
         <p>更新時間: {updateTime}</p>
       </footer>
+      <StyledGoTop />
     </div>
   );
 }
