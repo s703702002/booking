@@ -5,7 +5,8 @@ const fetchOptions = {
   method: "GET",
   mode: "cors",
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Accept-Encoding": "gzip, deflate"
   }
 };
 
