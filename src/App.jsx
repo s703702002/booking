@@ -44,7 +44,7 @@ function App() {
         setArrival(e.currentTarget.value);
       }
     },
-    [setDeparture, setArrival]
+    [setArrival, setDeparture]
   );
 
   const DepArrChange = useCallback(() => {
