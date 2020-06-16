@@ -1,11 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const StyledTable = styled.table`
   width: 100%;
   background-color: #aeeff9;
-  th, td {
-    padding: .3em;
+  th,
+  td {
+    padding: 0.3em;
   }
 `;
 
@@ -34,7 +35,7 @@ const PrizeTable = ({ prizeList, departure, arrival }) => {
         </tbody>
       </StyledTable>
     </div>
-  )
-}
+  );
+};
 
 export default PrizeTable;

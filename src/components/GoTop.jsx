@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
 function scrollTop() {
   window.scrollTo({
     top: 0,
     left: 0,
-    behavior: 'smooth'
-  })
+    behavior: "smooth"
+  });
 }
 
 function useGoTop() {
-  const [isShow, setIsShow] = useState(false)
+  const [isShow, setIsShow] = useState(false);
   useEffect(() => {
     function scroll() {
       if (window.scrollY > 200) {
-        setIsShow(true)
+        setIsShow(true);
       } else {
-        setIsShow(false)
+        setIsShow(false);
       }
     }
-    scroll()
-    window.addEventListener('scroll', scroll)
-    return () => window.removeEventListener('scroll', scroll)
-  },[setIsShow])
-  return isShow
+    scroll();
+    window.addEventListener("scroll", scroll);
+    return () => window.removeEventListener("scroll", scroll);
+  }, [setIsShow]);
+  return isShow;
 }
 
-function GoTop({...props}) {
-  const isShow = useGoTop()
+function GoTop({ ...props }) {
+  const isShow = useGoTop();
   const showObj = {
-    'display': 'block'
-  }
+    display: "block"
+  };
 
   return (
     <button style={isShow ? showObj : null} onClick={scrollTop} {...props}>
       TOP
     </button>
-  )
+  );
 }
 
 const StyledGoTop = styled(GoTop)`
@@ -51,6 +51,6 @@ const StyledGoTop = styled(GoTop)`
   text-align: center;
   padding: 0;
   display: none;
-`
+`;
 
-export default StyledGoTop
+export default StyledGoTop;
