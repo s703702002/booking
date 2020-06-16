@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { minsToTimes, timesToMins } from "../utils";
-import { Desc, Asc } from "./Icons";
+import { minsToTimes, timesToMins } from "utils";
+import { Desc, Asc } from "components/Icons";
 
 const StyledTable = styled.table`
   width: 100%;
