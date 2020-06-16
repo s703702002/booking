@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useRef } from "react";
-import { searchTrain, searchPriceByStation } from "apis";
+import React, { useState, useCallback, useRef, Suspense } from "react";
+import { searchTrain, searchPriceByStation } from "apis/THSR";
 import { timesToMins } from "utils";
 
 import ResultTable from "./components/ResultTable";
@@ -68,11 +68,13 @@ const THSR = () => {
       <header>
         <h1>高鐵時刻查詢</h1>
       </header>
-      <SeachForm
-        onSearch={searchClick}
-        departureRef={departureRef}
-        arrivalRef={arrivalRef}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <SeachForm
+          onSearch={searchClick}
+          departureRef={departureRef}
+          arrivalRef={arrivalRef}
+        />
+      </Suspense>
       <div className="container">
         <ResultTable
           sortByDeparture={sortByDeparture}

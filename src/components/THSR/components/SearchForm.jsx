@@ -1,20 +1,36 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 import { Row, Label, FormField } from "components/Grid";
 import Select, { TimeSelect } from "components/Select";
-import { getStations } from "apis";
+import { fetcher } from "apis/THSR";
 import { formatDate, getDefaultHour } from "utils";
-import useDidMount from "hooks/useDidMount";
 
 const { defaultDepTime, defaultArrTime } = getDefaultHour();
 
 const SearchForm = ({ onSearch, departureRef, arrivalRef, className }) => {
-  const [stationOptions, setStationOptions] = useState([]);
   const [date, setDate] = useState(formatDate(Date.now()));
   const [departure, setDeparture] = useState("1000"); // 台北
   const [arrival, setArrival] = useState("1070"); // 左營
   const [departureTime, setDepartureTime] = useState(defaultDepTime);
   const [arriveTime, setArriveTime] = useState(defaultArrTime);
+
+  // GET 取得車站基本資料
+  const { data } = useSWR("/v2/Rail/THSR/Station", fetcher, {
+    suspense: true,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    refreshWhenOffline: false,
+    refreshWhenHidden: false,
+    refreshInterval: 0
+  });
+
+  const stations = data
+    ? data.map(val => ({
+        value: val.StationID,
+        ...val.StationName
+      }))
+    : [];
 
   const depArrSwitch = () => {
     setDeparture(arrival);
@@ -29,19 +45,6 @@ const SearchForm = ({ onSearch, departureRef, arrivalRef, className }) => {
       departureTime,
       arriveTime
     });
-
-  useDidMount(() => {
-    getStations()
-      .then(res => res.json())
-      .then(data => {
-        const stations = data.map(val => ({
-          value: val.StationID,
-          ...val.StationName
-        }));
-        setStationOptions(stations);
-      })
-      .catch(err => console.log(err));
-  });
 
   return (
     <div className={`container ${className}`}>
@@ -64,7 +67,7 @@ const SearchForm = ({ onSearch, departureRef, arrivalRef, className }) => {
             className="form-control"
             name="OrginStation"
             id="OrginStation"
-            options={stationOptions}
+            options={stations}
             value={departure}
             onChange={e => setDeparture(e.currentTarget.value)}
             ref={departureRef}
@@ -87,7 +90,7 @@ const SearchForm = ({ onSearch, departureRef, arrivalRef, className }) => {
             className="form-control"
             name="DestinationStation"
             id="DestinationStation"
-            options={stationOptions}
+            options={stations}
             value={arrival}
             onChange={e => setArrival(e.currentTarget.value)}
             ref={arrivalRef}
