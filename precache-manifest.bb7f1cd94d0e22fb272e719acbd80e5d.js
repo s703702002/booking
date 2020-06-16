@@ -1,23 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "bc247d480626505da342cda7a3d9457a",
+    "revision": "702c8bad2db2599a7bb694f26d77763e",
     "url": "/booking/index.html"
   },
   {
-    "revision": "8787272b6d4b53331af3",
+    "revision": "392da0403dea0b361524",
     "url": "/booking/static/css/main.4d463a91.chunk.css"
   },
   {
-    "revision": "2929445dfd5f322d2459",
-    "url": "/booking/static/js/2.98fffcf4.chunk.js"
+    "revision": "6b1343a4a293afe994c5",
+    "url": "/booking/static/js/2.11f3da5e.chunk.js"
   },
   {
-    "revision": "8787272b6d4b53331af3",
-    "url": "/booking/static/js/main.a9813fb2.chunk.js"
+    "revision": "4fbf4566bfa91046d7a549b21c1c800d",
+    "url": "/booking/static/js/2.11f3da5e.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a695529b8a7c0e54eb19",
-    "url": "/booking/static/js/runtime~main.2a064130.js"
+    "revision": "392da0403dea0b361524",
+    "url": "/booking/static/js/main.8219f941.chunk.js"
+  },
+  {
+    "revision": "3757a2d75200f99586ee",
+    "url": "/booking/static/js/runtime-main.6af8a0d0.js"
   },
   {
     "revision": "d8be3f88ebe0fa31d562289dba77a90c",
