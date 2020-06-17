@@ -8,7 +8,7 @@ import { formatDate, getDefaultHour } from "utils";
 
 const { defaultDepTime, defaultArrTime } = getDefaultHour();
 
-const SearchForm = ({ onSearch, departureRef, arrivalRef, className }) => {
+const SearchForm = ({ onSearch, className }) => {
   const [date, setDate] = useState(formatDate(Date.now()));
   const [departure, setDeparture] = useState("1000"); // 台北
   const [arrival, setArrival] = useState("1070"); // 左營
@@ -70,7 +70,6 @@ const SearchForm = ({ onSearch, departureRef, arrivalRef, className }) => {
             options={stations}
             value={departure}
             onChange={e => setDeparture(e.currentTarget.value)}
-            ref={departureRef}
           />
         </FormField>
       </Row>
@@ -93,7 +92,6 @@ const SearchForm = ({ onSearch, departureRef, arrivalRef, className }) => {
             options={stations}
             value={arrival}
             onChange={e => setArrival(e.currentTarget.value)}
-            ref={arrivalRef}
           />
         </FormField>
       </Row>
