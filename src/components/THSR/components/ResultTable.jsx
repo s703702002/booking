@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { FaArrowsAltH, FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { minsToTimes, timesToMins } from "utils";
-import { Desc, Asc } from "components/Icons";
 
 const StyledTable = styled.table`
   width: 100%;
@@ -23,6 +23,11 @@ const StyledTh = styled.th`
   vertical-align: middle;
   font-weight: bold;
   cursor: ${props => (props.pointer ? "pointer" : "initial")};
+  > span {
+    display: inline-block;
+    margin-right: 2px;
+    vertical-align: middle;
+  }
 `;
 
 export const ResultRow = React.memo(
@@ -46,47 +51,76 @@ export const EmptyRow = () => (
   </tr>
 );
 
-const ResultTable = React.memo(
-  ({
-    sortByDeparture,
-    sortByArrival,
-    resultList,
-    onClickDepartureSort,
-    onClickArrivalSort
-  }) => {
-    return (
-      <StyledTable>
-        <thead>
-          <tr>
-            <StyledTh>車次</StyledTh>
-            <StyledTh pointer onClick={onClickDepartureSort}>
-              發車
-              {sortByDeparture === "desc" ? <Desc /> : <Asc />}
-            </StyledTh>
-            <StyledTh pointer onClick={onClickArrivalSort}>
-              到達
-              {sortByArrival === "desc" ? <Desc /> : <Asc />}
-            </StyledTh>
-            <StyledTh>總時程</StyledTh>
-          </tr>
-        </thead>
-        <tbody>
-          {resultList.length > 0 ? (
-            resultList.map(val => (
-              <ResultRow
-                key={val.DailyTrainInfo.TrainNo}
-                TrainNo={val.DailyTrainInfo.TrainNo}
-                DepartureTime={val.OriginStopTime.DepartureTime}
-                ArrivalTime={val.DestinationStopTime.ArrivalTime}
-              />
-            ))
-          ) : (
-            <EmptyRow />
-          )}
-        </tbody>
-      </StyledTable>
-    );
+const ResultTable = ({ resultList }) => {
+  const [sortBy, setSortBy] = useState();
+  const [order, setOrder] = useState();
+
+  const onClickDepartureSort = () => {
+    setSortBy("departure");
+    setOrder(order === "desc" ? "asc" : "desc");
+  };
+
+  const onClickArrivalSort = () => {
+    setSortBy("arrival");
+    setOrder(order === "desc" ? "asc" : "desc");
+  };
+
+  const renderList = resultList.sort((a, b) => {
+    if (sortBy === "departure") {
+      const aDepTimeMins = timesToMins(a.OriginStopTime.DepartureTime);
+      const bDepTimeMins = timesToMins(b.OriginStopTime.DepartureTime);
+
+      return order === "desc"
+        ? bDepTimeMins - aDepTimeMins
+        : aDepTimeMins - bDepTimeMins;
+    } else if (sortBy === "arrival") {
+      const aArrTimeMins = timesToMins(a.DestinationStopTime.ArrivalTime);
+      const bArrTimeMins = timesToMins(b.DestinationStopTime.ArrivalTime);
+
+      return order === "desc"
+        ? bArrTimeMins - aArrTimeMins
+        : aArrTimeMins - bArrTimeMins;
+    } else {
+      return true;
+    }
+  });
+
+  function renderIcon() {
+    return order === "desc" ? <FaArrowDown /> : <FaArrowUp />;
   }
-);
+
+  return (
+    <StyledTable>
+      <thead>
+        <tr>
+          <StyledTh>車次</StyledTh>
+          <StyledTh pointer onClick={onClickDepartureSort}>
+            <span>發車</span>
+            {sortBy === "departure" ? renderIcon() : <FaArrowsAltH />}
+          </StyledTh>
+          <StyledTh pointer onClick={onClickArrivalSort}>
+            <span>到達</span>
+            {sortBy === "arrival" ? renderIcon() : <FaArrowsAltH />}
+          </StyledTh>
+          <StyledTh>總時程</StyledTh>
+        </tr>
+      </thead>
+      <tbody>
+        {renderList.length > 0 ? (
+          renderList.map(val => (
+            <ResultRow
+              key={val.DailyTrainInfo.TrainNo}
+              TrainNo={val.DailyTrainInfo.TrainNo}
+              DepartureTime={val.OriginStopTime.DepartureTime}
+              ArrivalTime={val.DestinationStopTime.ArrivalTime}
+            />
+          ))
+        ) : (
+          <EmptyRow />
+        )}
+      </tbody>
+    </StyledTable>
+  );
+};
 
 export default ResultTable;

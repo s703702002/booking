@@ -21,7 +21,7 @@ const SwitchTransport = ({ onChange }) => {
           value="THSR"
           onChange={e => onChange(e.target.value)}
         />
-        THSR
+        高鐵
       </label>
       <label>
         <input
@@ -30,7 +30,7 @@ const SwitchTransport = ({ onChange }) => {
           value="TRA"
           onChange={e => onChange(e.target.value)}
         />
-        TRA
+        台鐵
       </label>
     </Container>
   );

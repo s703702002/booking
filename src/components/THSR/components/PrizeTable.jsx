@@ -11,6 +11,8 @@ const StyledTable = styled.table`
 `;
 
 const PrizeTable = ({ prizeList, departure, arrival }) => {
+  if (!prizeList || prizeList.length < 1) return null;
+
   return (
     <div className="mt-3 mb-3">
       <h3>票價資訊</h3>
