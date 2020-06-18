@@ -17,6 +17,6 @@ export function searchPriceByStation(OriginStationID, DestinationStationID) {
 
 export function getStations() {
   // GET 取得車站基本資料
-  const API_ODFARE = "/v2/Rail/THSR/Station";
+  const API_ODFARE = "/v2/Rail/TRA/Station?$top=500&$format=JSON";
   return fetch(API_BASE + API_ODFARE, getFetchOptions());
 }

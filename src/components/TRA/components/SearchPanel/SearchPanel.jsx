@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
-
 import { Row, Label, FormField } from "components/Grid";
 import Select, { TimeSelect } from "components/Select";
-import { fetcher } from "apis/THSR";
+import { getStations } from "apis/TRA";
 import { formatDate, getDefaultHour } from "utils";
 
 const { defaultDepTime, defaultArrTime } = getDefaultHour();
@@ -16,22 +15,7 @@ const SearchForm = ({ onSearch, className }) => {
   const [departureTime, setDepartureTime] = useState(defaultDepTime);
   const [arriveTime, setArriveTime] = useState(defaultArrTime);
 
-  // GET 取得車站基本資料
-  const { data } = useSWR("/v2/Rail/THSR/Station", fetcher, {
-    suspense: true,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    refreshWhenOffline: false,
-    refreshWhenHidden: false,
-    refreshInterval: 0
-  });
-
-  const stations = data
-    ? data.map(val => ({
-        value: val.StationID,
-        ...val.StationName
-      }))
-    : [];
+  const stations = [];
 
   const depArrSwitch = () => {
     setDeparture(arrival);
