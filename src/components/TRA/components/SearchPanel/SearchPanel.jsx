@@ -5,9 +5,11 @@ import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Row, Label, FormField } from "components/Grid";
+import { TimeSelect } from "components/Select";
+
+import { swrConfig } from "apis/config";
 import { fetcher } from "apis/TRA";
 import { formatDate, getDefaultHour } from "utils";
-import { TimeSelect } from "components/Select";
 
 const { defaultDepTime, defaultArrTime } = getDefaultHour();
 
@@ -22,14 +24,7 @@ const SearchForm = ({ onSearch, className }) => {
   const { data } = useSWR(
     "/v2/Rail/TRA/Station?$top=500&$format=JSON",
     fetcher,
-    {
-      suspense: true,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      refreshWhenOffline: false,
-      refreshWhenHidden: false,
-      refreshInterval: 0
-    }
+    swrConfig
   );
 
   const stations = data ? data : [];

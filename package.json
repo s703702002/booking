@@ -38,6 +38,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.10.1",
     "prettier": "1.18.2"
   },
   "husky": {

@@ -8,3 +8,12 @@ export default function getFetchOptions() {
     }
   };
 }
+
+export const swrConfig = {
+  suspense: true,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+  refreshWhenOffline: false,
+  refreshWhenHidden: false,
+  refreshInterval: 0
+};
