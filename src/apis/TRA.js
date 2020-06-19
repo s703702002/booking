@@ -20,3 +20,6 @@ export function getStations() {
   const API_ODFARE = "/v2/Rail/TRA/Station?$top=500&$format=JSON";
   return fetch(API_BASE + API_ODFARE, getFetchOptions());
 }
+
+export const fetcher = url =>
+  fetch(API_BASE + url, getFetchOptions()).then(r => r.json());

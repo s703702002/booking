@@ -1,21 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
+import Button from "@material-ui/core/Button";
+import { TextField } from "@material-ui/core";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Row, Label, FormField } from "components/Grid";
-import Select, { TimeSelect } from "components/Select";
-import { getStations } from "apis/TRA";
+import { fetcher } from "apis/TRA";
 import { formatDate, getDefaultHour } from "utils";
+import { TimeSelect } from "components/Select";
 
 const { defaultDepTime, defaultArrTime } = getDefaultHour();
 
 const SearchForm = ({ onSearch, className }) => {
   const [date, setDate] = useState(formatDate(Date.now()));
-  const [departure, setDeparture] = useState("1000"); // 台北
-  const [arrival, setArrival] = useState("1070"); // 左營
+  const [departure, setDeparture] = useState(null);
+  const [arrival, setArrival] = useState(null);
   const [departureTime, setDepartureTime] = useState(defaultDepTime);
   const [arriveTime, setArriveTime] = useState(defaultArrTime);
 
-  const stations = [];
+  // GET 取得車站基本資料
+  const { data } = useSWR(
+    "/v2/Rail/TRA/Station?$top=500&$format=JSON",
+    fetcher,
+    {
+      suspense: true,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      refreshWhenOffline: false,
+      refreshWhenHidden: false,
+      refreshInterval: 0
+    }
+  );
+
+  const stations = data ? data : [];
 
   const depArrSwitch = () => {
     setDeparture(arrival);
@@ -36,47 +53,56 @@ const SearchForm = ({ onSearch, className }) => {
       <Row>
         <Label htmlFor="trip-start">日期</Label>
         <FormField>
-          <input
-            className="form-control"
+          <TextField
             type="date"
             id="trip-start"
             value={date}
             onChange={e => setDate(e.currentTarget.value)}
+            fullWidth
+            variant="outlined"
           />
         </FormField>
       </Row>
       <Row>
         <Label htmlFor="OrginStation">起站</Label>
         <FormField>
-          <Select
-            className="form-control"
+          <Autocomplete
             name="OrginStation"
             id="OrginStation"
             options={stations}
+            onChange={(e, v) => setDeparture(v)}
             value={departure}
-            onChange={e => setDeparture(e.currentTarget.value)}
+            renderInput={params => (
+              <TextField {...params} label="起站" variant="outlined" />
+            )}
+            getOptionLabel={option =>
+              option.StationName.Zh_tw + " " + option.StationName.En
+            }
+            getOptionSelected={(o, v) => o.StationUID === v.StationUID}
           />
         </FormField>
       </Row>
       <div className="row justify-content-center form-group">
-        <button
-          onClick={depArrSwitch}
-          type="button"
-          className="btn btn-outline-primary"
-        >
+        <Button variant="contained" color="primary" onClick={depArrSwitch}>
           起迄站交換
-        </button>
+        </Button>
       </div>
       <Row>
         <Label htmlFor="DestinationStation">迄站</Label>
         <FormField>
-          <Select
-            className="form-control"
+          <Autocomplete
             name="DestinationStation"
             id="DestinationStation"
             options={stations}
+            onChange={(e, v) => setArrival(v)}
             value={arrival}
-            onChange={e => setArrival(e.currentTarget.value)}
+            renderInput={params => (
+              <TextField {...params} label="迄站" variant="outlined" />
+            )}
+            getOptionLabel={option =>
+              option.StationName.Zh_tw + " " + option.StationName.En
+            }
+            getOptionSelected={(o, v) => o.StationUID === v.StationUID}
           />
         </FormField>
       </Row>
@@ -84,11 +110,12 @@ const SearchForm = ({ onSearch, className }) => {
         <Label htmlFor="DepartureTime">最早出發</Label>
         <FormField>
           <TimeSelect
-            className="form-control"
             name="DepartureTime"
             id="DepartureTime"
             value={departureTime}
             onChange={e => setDepartureTime(e.target.value)}
+            fullWidth
+            variant="outlined"
           />
         </FormField>
       </Row>
@@ -96,21 +123,24 @@ const SearchForm = ({ onSearch, className }) => {
         <Label htmlFor="ArriveTime">最晚抵達</Label>
         <FormField>
           <TimeSelect
-            className="form-control"
             name="ArriveTime"
             id="ArriveTime"
             value={arriveTime}
             onChange={e => setArriveTime(e.target.value)}
+            fullWidth
+            variant="outlined"
           />
         </FormField>
       </Row>
-      <button
-        type="button"
-        className="btn btn-primary btn-lg btn-block"
+      <Button
+        size="large"
+        variant="contained"
+        color="primary"
+        fullWidth
         onClick={handleSearch}
       >
         查詢
-      </button>
+      </Button>
     </div>
   );
 };
