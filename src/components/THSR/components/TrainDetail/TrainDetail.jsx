@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { FaArrowsAltH, FaArrowDown, FaArrowUp } from "react-icons/fa";
 import useSWR from "swr";
+import UnfoldMoreIcon from "@material-ui/icons/UnfoldMore";
+
 import { fetcher } from "apis/THSR";
 import { timesToMins } from "utils";
+import SortIcon from "components/SortIcon";
 
 import Row, { NoResults } from "./components/Row";
 
@@ -98,10 +100,6 @@ const TrainDetail = ({
     }
   });
 
-  function renderIcon() {
-    return order === "desc" ? <FaArrowDown /> : <FaArrowUp />;
-  }
-
   return (
     <div>
       <StyledTable>
@@ -110,11 +108,19 @@ const TrainDetail = ({
             <StyledTh>車次</StyledTh>
             <StyledTh pointer onClick={onClickDepartureSort}>
               <span>發車</span>
-              {sortBy === "departure" ? renderIcon() : <FaArrowsAltH />}
+              {sortBy === "departure" ? (
+                <SortIcon order={order} />
+              ) : (
+                <UnfoldMoreIcon />
+              )}
             </StyledTh>
             <StyledTh pointer onClick={onClickArrivalSort}>
               <span>到達</span>
-              {sortBy === "arrival" ? renderIcon() : <FaArrowsAltH />}
+              {sortBy === "arrival" ? (
+                <SortIcon order={order} />
+              ) : (
+                <UnfoldMoreIcon />
+              )}
             </StyledTh>
             <StyledTh>總時程</StyledTh>
           </tr>

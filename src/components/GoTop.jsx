@@ -26,20 +26,7 @@ function useGoTop() {
   return isShow;
 }
 
-function GoTop({ ...props }) {
-  const isShow = useGoTop();
-  const showObj = {
-    display: "block"
-  };
-
-  return (
-    <button style={isShow ? showObj : null} onClick={scrollTop} {...props}>
-      TOP
-    </button>
-  );
-}
-
-const StyledGoTop = styled(GoTop)`
+const StyledButton = styled.button`
   position: fixed;
   bottom: 5%;
   right: 5%;
@@ -50,7 +37,17 @@ const StyledGoTop = styled(GoTop)`
   border-radius: 50%;
   text-align: center;
   padding: 0;
-  display: none;
+  display: ${({ isShow }) => (isShow ? "block" : "none")};
 `;
 
-export default StyledGoTop;
+function GoTop({ ...props }) {
+  const isShow = useGoTop();
+
+  return (
+    <StyledButton isShow={isShow} onClick={scrollTop} {...props}>
+      TOP
+    </StyledButton>
+  );
+}
+
+export default GoTop;

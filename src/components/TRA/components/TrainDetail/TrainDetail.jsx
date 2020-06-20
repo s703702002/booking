@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { FaArrowsAltH } from "react-icons/fa";
 import useSWR from "swr";
+
+import UnfoldMoreIcon from "@material-ui/icons/UnfoldMore";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -12,7 +13,7 @@ import { fetcher } from "apis/THSR";
 import { timesToMins } from "utils";
 
 import Row, { NoResults } from "./components/Row";
-import SortIcon from "./components/SortIcon";
+import SortIcon from "components/SortIcon";
 
 const TrainDetail = ({ departure, arrival, trainDate }) => {
   const [sortBy, setSortBy] = useState();
@@ -72,7 +73,7 @@ const TrainDetail = ({ departure, arrival, trainDate }) => {
               {sortBy === "departure" ? (
                 <SortIcon order={order} />
               ) : (
-                <FaArrowsAltH />
+                <UnfoldMoreIcon />
               )}
             </TableCell>
             <TableCell onClick={onClickArrivalSort}>
@@ -80,7 +81,7 @@ const TrainDetail = ({ departure, arrival, trainDate }) => {
               {sortBy === "arrival" ? (
                 <SortIcon order={order} />
               ) : (
-                <FaArrowsAltH />
+                <UnfoldMoreIcon />
               )}
             </TableCell>
             <TableCell>詳細資訊</TableCell>
@@ -96,7 +97,6 @@ const TrainDetail = ({ departure, arrival, trainDate }) => {
           )}
         </TableBody>
       </Table>
-
       <footer className="fixed-bottom">
         <p>更新時間: {data?.[0]?.UpdateTime || "---"}</p>
       </footer>

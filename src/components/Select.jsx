@@ -27,7 +27,7 @@ const StyledSelect = withStyles({
   }
 })(Select);
 
-export const TimeSelect = ({ options, ...props }) => (
+export const TimeSelect = ({ ...props }) => (
   <StyledSelect {...props}>
     <MenuItem value="06:00">06:00</MenuItem>
     <MenuItem value="07:00">07:00</MenuItem>
