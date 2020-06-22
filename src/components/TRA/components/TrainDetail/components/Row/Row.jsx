@@ -29,7 +29,7 @@ const Row = ({ detail }) => {
         <Button color="primary" onClick={toggle}>
           查看
         </Button>
-        <TrainInfoDialog isOpen={isOpen} toggle={toggle} />
+        <TrainInfoDialog trainNo={TrainNo} isOpen={isOpen} toggle={toggle} />
       </TableCell>
     </TableRow>
   );

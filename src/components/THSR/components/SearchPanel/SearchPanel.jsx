@@ -14,7 +14,7 @@ const SearchForm = ({ onSearch, className }) => {
   const [departure, setDeparture] = useState("1000"); // 台北
   const [arrival, setArrival] = useState("1070"); // 左營
   const [departureTime, setDepartureTime] = useState(defaultDepTime);
-  const [arriveTime, setArriveTime] = useState(defaultArrTime);
+  const [arrivalTime, setArriveTime] = useState(defaultArrTime);
 
   // GET 取得車站基本資料
   const { data } = useSWR("/v2/Rail/THSR/Station", fetcher, {
@@ -44,7 +44,7 @@ const SearchForm = ({ onSearch, className }) => {
       departure,
       arrival,
       departureTime,
-      arriveTime
+      arrivalTime
     });
 
   return (
@@ -115,7 +115,7 @@ const SearchForm = ({ onSearch, className }) => {
             className="form-control"
             name="ArriveTime"
             id="ArriveTime"
-            value={arriveTime}
+            value={arrivalTime}
             onChange={e => setArriveTime(e.target.value)}
           />
         </FormField>

@@ -1,6 +1,7 @@
 import React, { Suspense, useState } from "react";
 import SearchPanel from "./components/SearchPanel";
 import TrainDetail from "./components/TrainDetail";
+import Context from "./context";
 
 const TRA = () => {
   const [trainDate, setTrainDate] = useState("");
@@ -14,13 +15,13 @@ const TRA = () => {
     departure,
     arrival,
     departureTime,
-    arriveTime
+    arrivalTime
   }) => {
     setTrainDate(date);
     setDeparture(departure);
     setArrival(arrival);
     setDepartureTime(departureTime);
-    setArrivalTime(arriveTime);
+    setArrivalTime(arrivalTime);
   };
 
   return (
@@ -31,13 +32,17 @@ const TRA = () => {
       <Suspense fallback={<div>Get stations...</div>}>
         <SearchPanel onSearch={onSearch} />
       </Suspense>
-      <Suspense fallback={<div>Get train details...</div>}>
-        <TrainDetail
-          departure={departure}
-          arrival={arrival}
-          trainDate={trainDate}
-        />
-      </Suspense>
+      <Context.Provider
+        value={{ trainDate, departure, arrival, departureTime, arrivalTime }}
+      >
+        <Suspense fallback={<div>Get train details...</div>}>
+          <TrainDetail
+            departure={departure}
+            arrival={arrival}
+            trainDate={trainDate}
+          />
+        </Suspense>
+      </Context.Provider>
     </div>
   );
 };

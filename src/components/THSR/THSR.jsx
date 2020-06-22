@@ -15,13 +15,13 @@ const THSR = () => {
     departure,
     arrival,
     departureTime,
-    arriveTime
+    arrivalTime
   }) => {
     setTrainDate(date);
     setDeparture(departure);
     setArrival(arrival);
     setDepartureTime(departureTime);
-    setArrivalTime(arriveTime);
+    setArrivalTime(arrivalTime);
   };
 
   return (

@@ -32,7 +32,7 @@ const SearchForm = ({ onSearch }) => {
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
   const [departureTime, setDepartureTime] = useState(defaultDepTime);
-  const [arriveTime, setArriveTime] = useState(defaultArrTime);
+  const [arrivalTime, setArriveTime] = useState(defaultArrTime);
 
   // GET 取得車站基本資料
   const { data } = useSWR(
@@ -54,7 +54,7 @@ const SearchForm = ({ onSearch }) => {
       departure,
       arrival,
       departureTime,
-      arriveTime
+      arrivalTime
     });
 
   return (
@@ -135,7 +135,7 @@ const SearchForm = ({ onSearch }) => {
             <TimeSelect
               name="ArriveTime"
               id="ArriveTime"
-              value={arriveTime}
+              value={arrivalTime}
               onChange={e => setArriveTime(e.target.value)}
               fullWidth
               variant="outlined"
