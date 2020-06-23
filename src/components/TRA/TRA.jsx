@@ -1,4 +1,6 @@
 import React, { Suspense, useState } from "react";
+import { Typography } from "@material-ui/core";
+
 import SearchPanel from "./components/SearchPanel";
 import TrainDetail from "./components/TrainDetail";
 import Context from "./context";
@@ -26,9 +28,7 @@ const TRA = () => {
 
   return (
     <div>
-      <header>
-        <h1>台鐵時刻查詢</h1>
-      </header>
+      <Typography variant="h3">台鐵時刻查詢</Typography>
       <Suspense fallback={<div>Get stations...</div>}>
         <SearchPanel onSearch={onSearch} />
       </Suspense>

@@ -1,4 +1,6 @@
 import React, { useState, Suspense } from "react";
+import { Typography } from "@material-ui/core";
+
 import TrainDetail from "./components/TrainDetail";
 import PrizeDetail from "./components/PrizeDetail";
 import SearchPanel from "./components/SearchPanel";
@@ -26,26 +28,22 @@ const THSR = () => {
 
   return (
     <div>
-      <header>
-        <h1>高鐵時刻查詢</h1>
-      </header>
-      <Suspense fallback={<div>Loading stations...</div>}>
+      <Typography variant="h3">高鐵時刻查詢</Typography>
+      <Suspense fallback={<div>Get stations...</div>}>
         <SearchPanel onSearch={searchClick} />
       </Suspense>
-      <div className="container">
-        <Suspense fallback={<div>Get train details...</div>}>
-          <TrainDetail
-            departure={departure}
-            arrival={arrival}
-            trainDate={trainDate}
-            departureTime={departureTime}
-            arrivalTime={arrivalTime}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Get prize detail...</div>}>
-          <PrizeDetail departure={departure} arrival={arrival} />
-        </Suspense>
-      </div>
+      <Suspense fallback={<div>Get train details...</div>}>
+        <TrainDetail
+          departure={departure}
+          arrival={arrival}
+          trainDate={trainDate}
+          departureTime={departureTime}
+          arrivalTime={arrivalTime}
+        />
+      </Suspense>
+      <Suspense fallback={<div>Get prize detail...</div>}>
+        <PrizeDetail departure={departure} arrival={arrival} />
+      </Suspense>
     </div>
   );
 };

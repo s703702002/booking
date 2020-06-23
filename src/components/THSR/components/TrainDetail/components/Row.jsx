@@ -1,10 +1,13 @@
 import React from "react";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
+
 import { minsToTimes, timesToMins } from "utils";
 
 export const NoResults = () => (
-  <tr>
-    <td colSpan="4">尚無資料</td>
-  </tr>
+  <TableRow>
+    <TableCell colSpan="4">尚無資料</TableCell>
+  </TableRow>
 );
 
 const Row = ({ detail }) => {
@@ -15,12 +18,12 @@ const Row = ({ detail }) => {
   const Amins = timesToMins(ArrivalTime);
 
   return (
-    <tr>
-      <td className="text-info font-weight-bold">{TrainNo}</td>
-      <td>{DepartureTime}</td>
-      <td>{ArrivalTime}</td>
-      <td>{minsToTimes(Amins - Dmins)}</td>
-    </tr>
+    <TableRow>
+      <TableCell className="text-info font-weight-bold">{TrainNo}</TableCell>
+      <TableCell>{DepartureTime}</TableCell>
+      <TableCell>{ArrivalTime}</TableCell>
+      <TableCell>{minsToTimes(Amins - Dmins)}</TableCell>
+    </TableRow>
   );
 };
 

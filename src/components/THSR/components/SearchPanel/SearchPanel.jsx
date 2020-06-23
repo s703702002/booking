@@ -1,11 +1,27 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
+import { TextField } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 import { Row, Label, FormField } from "components/Grid";
 import Select, { TimeSelect } from "components/Select";
 import { fetcher } from "apis/THSR";
 import { formatDate, getDefaultHour } from "utils";
+
+const Container = styled.div`
+  box-shadow: 1px 1px 5px #ddd;
+  background-color: #f3f3f3;
+  border-color: #ddd;
+  color: #333;
+  text-shadow: 0 1px 0 #eee;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
+  .col-form-label {
+    max-width: 7em;
+  }
+`;
 
 const { defaultDepTime, defaultArrTime } = getDefaultHour();
 
@@ -48,101 +64,93 @@ const SearchForm = ({ onSearch, className }) => {
     });
 
   return (
-    <div className={`container ${className}`}>
-      <Row>
-        <Label htmlFor="trip-start">日期</Label>
-        <FormField>
-          <input
-            className="form-control"
-            type="date"
-            id="trip-start"
-            value={date}
-            onChange={e => setDate(e.currentTarget.value)}
-          />
-        </FormField>
-      </Row>
-      <Row>
-        <Label htmlFor="OrginStation">起站</Label>
-        <FormField>
-          <Select
-            className="form-control"
-            name="OrginStation"
-            id="OrginStation"
-            options={stations}
-            value={departure}
-            onChange={e => setDeparture(e.currentTarget.value)}
-          />
-        </FormField>
-      </Row>
-      <div className="row justify-content-center form-group">
-        <button
-          onClick={depArrSwitch}
-          type="button"
-          className="btn btn-outline-primary"
+    <Container>
+      <div className="container">
+        <Row>
+          <Label htmlFor="trip-start">日期</Label>
+          <FormField>
+            <TextField
+              type="date"
+              id="trip-start"
+              value={date}
+              onChange={e => setDate(e.currentTarget.value)}
+              fullWidth
+              variant="outlined"
+            />
+          </FormField>
+        </Row>
+        <Row>
+          <Label htmlFor="OrginStation">起站</Label>
+          <FormField>
+            <Select
+              name="OrginStation"
+              id="OrginStation"
+              options={stations}
+              value={departure}
+              onChange={e => setDeparture(e.target.value)}
+              fullWidth
+              variant="outlined"
+            />
+          </FormField>
+        </Row>
+        <div className="row justify-content-center form-group">
+          <Button variant="contained" color="primary" onClick={depArrSwitch}>
+            起迄站交換
+          </Button>
+        </div>
+        <Row>
+          <Label htmlFor="DestinationStation">迄站</Label>
+          <FormField>
+            <Select
+              name="DestinationStation"
+              id="DestinationStation"
+              options={stations}
+              value={arrival}
+              onChange={e => setArrival(e.target.value)}
+              fullWidth
+              variant="outlined"
+            />
+          </FormField>
+        </Row>
+        <Row>
+          <Label htmlFor="DepartureTime">最早出發</Label>
+          <FormField>
+            <TimeSelect
+              name="DepartureTime"
+              id="DepartureTime"
+              value={departureTime}
+              onChange={e => setDepartureTime(e.target.value)}
+              fullWidth
+              variant="outlined"
+            />
+          </FormField>
+        </Row>
+        <Row>
+          <Label htmlFor="ArriveTime">最晚抵達</Label>
+          <FormField>
+            <TimeSelect
+              name="ArriveTime"
+              id="ArriveTime"
+              value={arrivalTime}
+              onChange={e => setArriveTime(e.target.value)}
+              fullWidth
+              variant="outlined"
+            />
+          </FormField>
+        </Row>
+        <Button
+          size="large"
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={handleSearch}
+          disabled={!departure || !arrival}
         >
-          起迄站交換
-        </button>
+          查詢
+        </Button>
       </div>
-      <Row>
-        <Label htmlFor="DestinationStation">迄站</Label>
-        <FormField>
-          <Select
-            className="form-control"
-            name="DestinationStation"
-            id="DestinationStation"
-            options={stations}
-            value={arrival}
-            onChange={e => setArrival(e.currentTarget.value)}
-          />
-        </FormField>
-      </Row>
-      <Row>
-        <Label htmlFor="DepartureTime">最早出發</Label>
-        <FormField>
-          <TimeSelect
-            className="form-control"
-            name="DepartureTime"
-            id="DepartureTime"
-            value={departureTime}
-            onChange={e => setDepartureTime(e.target.value)}
-          />
-        </FormField>
-      </Row>
-      <Row>
-        <Label htmlFor="ArriveTime">最晚抵達</Label>
-        <FormField>
-          <TimeSelect
-            className="form-control"
-            name="ArriveTime"
-            id="ArriveTime"
-            value={arrivalTime}
-            onChange={e => setArriveTime(e.target.value)}
-          />
-        </FormField>
-      </Row>
-      <button
-        type="button"
-        className="btn btn-primary btn-lg btn-block"
-        onClick={handleSearch}
-      >
-        查詢
-      </button>
-    </div>
+    </Container>
   );
 };
 
-const StyledSeachForm = styled(SearchForm)`
-  box-shadow: 1px 1px 5px #ddd;
-  background-color: #f3f3f3;
-  border-color: #ddd;
-  color: #333;
-  text-shadow: 0 1px 0 #eee;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  margin-bottom: 0.5em;
-  .col-form-label {
-    max-width: 7em;
-  }
-`;
-
-export default StyledSeachForm;
+export default SearchForm;

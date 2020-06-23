@@ -1,40 +1,17 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import useSWR from "swr";
 import UnfoldMoreIcon from "@material-ui/icons/UnfoldMore";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 
 import { fetcher } from "apis/THSR";
 import { timesToMins } from "utils";
 import SortIcon from "components/SortIcon";
 
 import Row, { NoResults } from "./components/Row";
-
-const StyledTable = styled.table`
-  width: 100%;
-  box-shadow: 0px 3px 10px #ddd;
-  thead {
-    background-color: #eee;
-  }
-  td {
-    padding: 0.3em;
-    vertical-align: middle;
-  }
-  tr:nth-child(even) {
-    background-color: #eee;
-  }
-`;
-
-const StyledTh = styled.th`
-  padding: 0.3em;
-  vertical-align: middle;
-  font-weight: bold;
-  cursor: ${props => (props.pointer ? "pointer" : "initial")};
-  > span {
-    display: inline-block;
-    margin-right: 2px;
-    vertical-align: middle;
-  }
-`;
 
 const TrainDetail = ({
   departure,
@@ -102,30 +79,30 @@ const TrainDetail = ({
 
   return (
     <div>
-      <StyledTable>
-        <thead>
-          <tr>
-            <StyledTh>車次</StyledTh>
-            <StyledTh pointer onClick={onClickDepartureSort}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>車次</TableCell>
+            <TableCell pointer onClick={onClickDepartureSort}>
               <span>發車</span>
               {sortBy === "departure" ? (
                 <SortIcon order={order} />
               ) : (
                 <UnfoldMoreIcon />
               )}
-            </StyledTh>
-            <StyledTh pointer onClick={onClickArrivalSort}>
+            </TableCell>
+            <TableCell pointer onClick={onClickArrivalSort}>
               <span>到達</span>
               {sortBy === "arrival" ? (
                 <SortIcon order={order} />
               ) : (
                 <UnfoldMoreIcon />
               )}
-            </StyledTh>
-            <StyledTh>總時程</StyledTh>
-          </tr>
-        </thead>
-        <tbody>
+            </TableCell>
+            <TableCell>總時程</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {renderList.length > 0 ? (
             renderList.map(detail => (
               <Row key={detail.DailyTrainInfo.TrainNo} detail={detail} />
@@ -133,8 +110,8 @@ const TrainDetail = ({
           ) : (
             <NoResults />
           )}
-        </tbody>
-      </StyledTable>
+        </TableBody>
+      </Table>
       <footer className="fixed-bottom">
         <p>更新時間: {data[0].UpdateTime}</p>
       </footer>

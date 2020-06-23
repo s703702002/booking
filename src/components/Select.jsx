@@ -3,31 +3,29 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { withStyles } from "@material-ui/core/styles";
 
-const Selector = React.memo(
-  React.forwardRef(({ options, ...props }, ref) => {
-    return (
-      <select {...props} ref={ref}>
-        {options.length > 0 ? (
-          options.map(e => (
-            <option key={e.value} value={e.value}>
-              {e.Zh_tw + e.En}
-            </option>
-          ))
-        ) : (
-          <option value="">請選擇</option>
-        )}
-      </select>
-    );
-  })
-);
-
 const StyledSelect = withStyles({
   root: {
     textAlign: "left"
   }
 })(Select);
 
-export const TimeSelect = ({ ...props }) => (
+const Selector = ({ options, ...props }) => {
+  return (
+    <StyledSelect {...props}>
+      {options.length > 0 ? (
+        options.map(o => (
+          <MenuItem key={o.value} value={o.value}>
+            {o.Zh_tw + o.En}
+          </MenuItem>
+        ))
+      ) : (
+        <MenuItem value="">無資料</MenuItem>
+      )}
+    </StyledSelect>
+  );
+};
+
+export const TimeSelect = props => (
   <StyledSelect {...props}>
     <MenuItem value="06:00">06:00</MenuItem>
     <MenuItem value="07:00">07:00</MenuItem>
