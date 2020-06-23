@@ -5,11 +5,10 @@ import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Row, Label, FormField } from "components/Grid";
-import { TimeSelect } from "components/Select";
 
 import { swrConfig } from "apis/config";
 import { fetcher } from "apis/TRA";
-import { formatDate, getDefaultHour } from "utils";
+import { formatDate } from "utils";
 
 const Container = styled.div`
   box-shadow: 1px 1px 5px #ddd;
@@ -25,14 +24,10 @@ const Container = styled.div`
   }
 `;
 
-const { defaultDepTime, defaultArrTime } = getDefaultHour();
-
 const SearchForm = ({ onSearch }) => {
   const [date, setDate] = useState(formatDate(Date.now()));
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
-  const [departureTime, setDepartureTime] = useState(defaultDepTime);
-  const [arrivalTime, setArriveTime] = useState(defaultArrTime);
 
   // GET 取得車站基本資料
   const { data } = useSWR(
@@ -52,9 +47,7 @@ const SearchForm = ({ onSearch }) => {
     onSearch({
       date,
       departure,
-      arrival,
-      departureTime,
-      arrivalTime
+      arrival
     });
 
   return (
@@ -113,32 +106,6 @@ const SearchForm = ({ onSearch }) => {
                 option.StationName.Zh_tw + " " + option.StationName.En
               }
               getOptionSelected={(o, v) => o.StationUID === v.StationUID}
-            />
-          </FormField>
-        </Row>
-        <Row>
-          <Label htmlFor="DepartureTime">最早出發</Label>
-          <FormField>
-            <TimeSelect
-              name="DepartureTime"
-              id="DepartureTime"
-              value={departureTime}
-              onChange={e => setDepartureTime(e.target.value)}
-              fullWidth
-              variant="outlined"
-            />
-          </FormField>
-        </Row>
-        <Row>
-          <Label htmlFor="ArriveTime">最晚抵達</Label>
-          <FormField>
-            <TimeSelect
-              name="ArriveTime"
-              id="ArriveTime"
-              value={arrivalTime}
-              onChange={e => setArriveTime(e.target.value)}
-              fullWidth
-              variant="outlined"
             />
           </FormField>
         </Row>

@@ -7,6 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
+import { swrConfig } from "apis/config";
 import { fetcher } from "apis/THSR";
 import { timesToMins } from "utils";
 import SortIcon from "components/SortIcon";
@@ -31,7 +32,7 @@ const TrainDetail = ({
       shouldFetch &&
       `/v2/Rail/THSR/DailyTimetable/OD/${departure}/to/${arrival}/${trainDate}`,
     fetcher,
-    { suspense: true }
+    swrConfig
   );
 
   const depFilterTime = timesToMins(departureTime);
@@ -44,8 +45,6 @@ const TrainDetail = ({
         return depTime > depFilterTime && arrTime < arrFilterTime;
       })
     : [];
-
-  if (trainDetails.length < 1) return null;
 
   const onClickDepartureSort = () => {
     setSortBy("departure");
@@ -113,7 +112,7 @@ const TrainDetail = ({
         </TableBody>
       </Table>
       <footer className="fixed-bottom">
-        <p>更新時間: {data[0].UpdateTime}</p>
+        <p>更新時間: {data?.[0]?.UpdateTime || "---"}</p>
       </footer>
     </div>
   );

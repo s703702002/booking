@@ -1,7 +1,9 @@
 import React from "react";
 import useSWR from "swr";
+
 import styled from "styled-components";
 import { fetcher } from "apis/THSR";
+import { swrConfig } from "apis/config";
 
 const StyledTable = styled.table`
   width: 100%;
@@ -19,7 +21,7 @@ const PrizeDetail = ({ departure, arrival }) => {
   const { data } = useSWR(
     () => shouldFetch && `/v2/Rail/THSR/ODFare/${departure}/to/${arrival}`,
     fetcher,
-    { suspense: true }
+    swrConfig
   );
 
   const prizeList = data ? data[0].Fares : [];

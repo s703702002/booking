@@ -2,6 +2,7 @@ import React from "react";
 
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
 import useToggle from "hooks/useToggle";
@@ -22,7 +23,9 @@ const Row = ({ detail }) => {
 
   return (
     <TableRow>
-      <TableCell className="text-info font-weight-bold">{TrainNo}</TableCell>
+      <TableCell>
+        <Typography color="primary">{TrainNo}</Typography>
+      </TableCell>
       <TableCell>{DepartureTime}</TableCell>
       <TableCell>{ArrivalTime}</TableCell>
       <TableCell>
