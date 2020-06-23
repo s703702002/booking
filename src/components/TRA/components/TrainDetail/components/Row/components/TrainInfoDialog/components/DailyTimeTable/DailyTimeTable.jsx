@@ -14,9 +14,37 @@ import { swrConfig } from "apis/config";
 import { fetcher } from "apis/TRA";
 import Context from "components/TRA/context";
 
-const DailyTimeTable = ({ trainNo }) => {
+const Station = ({ station, isFirstStaion, isLastStation }) => {
   const { departure, arrival } = useContext(Context);
+  const isTargetStation =
+    station.StationID === departure.StationID ||
+    station.StationID === arrival.StationID;
 
+  const dotColor = isTargetStation
+    ? "secondary"
+    : isFirstStaion || isLastStation
+    ? "primary"
+    : undefined;
+
+  const stationName = `${station.StationName.Zh_tw} ${station.StationName.En}`;
+
+  return (
+    <TimelineItem>
+      <TimelineOppositeContent>
+        <Typography color="textSecondary">{station.ArrivalTime}</Typography>
+      </TimelineOppositeContent>
+      <TimelineSeparator>
+        <TimelineDot color={dotColor} />
+        <TimelineConnector />
+      </TimelineSeparator>
+      <TimelineContent>
+        <Typography>{stationName}</Typography>
+      </TimelineContent>
+    </TimelineItem>
+  );
+};
+
+const DailyTimeTable = ({ trainNo }) => {
   // GET 取得當天指定[車次]的時刻表資料
   const { data } = useSWR(
     () => trainNo && `/v2/Rail/TRA/DailyTimetable/Today/TrainNo/${trainNo}`,
@@ -27,33 +55,16 @@ const DailyTimeTable = ({ trainNo }) => {
   const stops = data ? data[0].StopTimes : [];
 
   return (
-    <div>
-      <Timeline align="right">
-        {stops.map(v => (
-          <TimelineItem key={v.StationID}>
-            <TimelineOppositeContent>
-              <Typography color="textSecondary">{v.ArrivalTime}</Typography>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot
-                color={
-                  v.StationID === departure.StationID ||
-                  v.StationID === arrival.StationID
-                    ? "secondary"
-                    : undefined
-                }
-              />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <Typography>
-                {`${v.StationName.Zh_tw} ${v.StationName.En}`}
-              </Typography>
-            </TimelineContent>
-          </TimelineItem>
-        ))}
-      </Timeline>
-    </div>
+    <Timeline align="right">
+      {stops.map((v, i) => (
+        <Station
+          key={v.StationID}
+          station={v}
+          isFirstStaion={i === 0}
+          isLastStation={i === stops.length - 1}
+        />
+      ))}
+    </Timeline>
   );
 };
 

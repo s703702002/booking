@@ -1,53 +1,46 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React from "react";
 
-function scrollTop() {
-  window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: "smooth"
+import Fab from "@material-ui/core/Fab";
+import { makeStyles } from "@material-ui/core/styles";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import Zoom from "@material-ui/core/Zoom";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    position: "fixed",
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+    zIndex: 1200
+  }
+}));
+
+function ScrollTop() {
+  const classes = useStyles();
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 100
   });
-}
 
-function useGoTop() {
-  const [isShow, setIsShow] = useState(false);
-  useEffect(() => {
-    function scroll() {
-      if (window.scrollY > 200) {
-        setIsShow(true);
-      } else {
-        setIsShow(false);
-      }
+  const handleClick = event => {
+    const anchor = (event.target.ownerDocument || document).querySelector(
+      "#back-to-top-anchor"
+    );
+
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
     }
-    scroll();
-    window.addEventListener("scroll", scroll);
-    return () => window.removeEventListener("scroll", scroll);
-  }, [setIsShow]);
-  return isShow;
-}
-
-const StyledButton = styled.button`
-  position: fixed;
-  bottom: 5%;
-  right: 5%;
-  z-index: 1050;
-  width: 45px;
-  height: 45px;
-  background: #eee;
-  border-radius: 50%;
-  text-align: center;
-  padding: 0;
-  display: ${({ isShow }) => (isShow ? "block" : "none")};
-`;
-
-function GoTop({ ...props }) {
-  const isShow = useGoTop();
+  };
 
   return (
-    <StyledButton isShow={isShow} onClick={scrollTop} {...props}>
-      TOP
-    </StyledButton>
+    <Zoom in={trigger}>
+      <div onClick={handleClick} role="presentation" className={classes.root}>
+        <Fab color="secondary" size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </div>
+    </Zoom>
   );
 }
 
-export default GoTop;
+export default ScrollTop;

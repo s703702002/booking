@@ -42,7 +42,7 @@ function App() {
 
   return (
     <div className="App">
-      <AppBar position="static">
+      <AppBar position="static" id="back-to-top-anchor">
         <Tabs
           value={transportation}
           onChange={handleChange}
