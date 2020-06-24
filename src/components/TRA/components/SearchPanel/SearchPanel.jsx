@@ -8,15 +8,29 @@ import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import FormControl from "@material-ui/core/FormControl";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 import { swrConfig } from "apis/config";
 import { fetcher } from "apis/TRA";
-import { formatDate } from "utils";
+import { formatDate, getClosestStation } from "utils";
+import useGeoLocation from "hooks/useGeoLocation";
+
+const Option = option => {
+  return (
+    <>
+      {option.icon && (
+        <LocationOnIcon color="primary" style={{ marginRight: 8 }} />
+      )}
+      {option.StationName.Zh_tw + " " + option.StationName.En}
+    </>
+  );
+};
 
 const SearchForm = ({ onSearch }) => {
-  const [date, setDate] = useState(formatDate(Date.now()));
+  const [date, setDate] = useState(() => formatDate(Date.now()));
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
+  const location = useGeoLocation();
 
   // GET 取得車站基本資料
   const { data } = useSWR(
@@ -25,7 +39,11 @@ const SearchForm = ({ onSearch }) => {
     swrConfig
   );
 
-  const stations = data ? data : [];
+  const closestStation = getClosestStation(location, data);
+
+  const stations = data
+    ? [closestStation, ...data].filter(v => v !== null)
+    : [];
 
   const depArrSwitch = () => {
     setDeparture(arrival);
@@ -63,10 +81,12 @@ const SearchForm = ({ onSearch }) => {
               renderInput={params => (
                 <TextField {...params} label="起站" variant="outlined" />
               )}
-              getOptionLabel={option =>
-                option.StationName.Zh_tw + " " + option.StationName.En
+              renderOption={Option}
+              getOptionLabel={({ StationName }) =>
+                StationName.Zh_tw + " " + StationName.En
               }
               getOptionSelected={(o, v) => o.StationUID === v.StationUID}
+              getOptionDisabled={o => o.disabled}
             />
           </FormControl>
           <FormControl margin="normal">
@@ -84,10 +104,12 @@ const SearchForm = ({ onSearch }) => {
               renderInput={params => (
                 <TextField {...params} label="迄站" variant="outlined" />
               )}
+              renderOption={Option}
               getOptionLabel={option =>
                 option.StationName.Zh_tw + " " + option.StationName.En
               }
               getOptionSelected={(o, v) => o.StationUID === v.StationUID}
+              getOptionDisabled={o => o.disabled}
             />
           </FormControl>
           <FormControl fullWidth margin="normal">

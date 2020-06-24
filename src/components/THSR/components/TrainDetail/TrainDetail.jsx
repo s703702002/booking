@@ -82,7 +82,7 @@ const TrainDetail = ({
         <TableHead>
           <TableRow>
             <TableCell>車次</TableCell>
-            <TableCell pointer onClick={onClickDepartureSort}>
+            <TableCell onClick={onClickDepartureSort}>
               <span>發車</span>
               {sortBy === "departure" ? (
                 <SortIcon order={order} />
@@ -90,7 +90,7 @@ const TrainDetail = ({
                 <UnfoldMoreIcon />
               )}
             </TableCell>
-            <TableCell pointer onClick={onClickArrivalSort}>
+            <TableCell onClick={onClickArrivalSort}>
               <span>到達</span>
               {sortBy === "arrival" ? (
                 <SortIcon order={order} />

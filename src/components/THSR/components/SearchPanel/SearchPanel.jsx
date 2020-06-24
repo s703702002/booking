@@ -17,7 +17,7 @@ import { formatDate, getDefaultHour } from "utils";
 const { defaultDepTime, defaultArrTime } = getDefaultHour();
 
 const SearchForm = ({ onSearch, className }) => {
-  const [date, setDate] = useState(formatDate(Date.now()));
+  const [date, setDate] = useState(() => formatDate(Date.now()));
   const [departure, setDeparture] = useState("1000"); // 台北
   const [arrival, setArrival] = useState("1070"); // 左營
   const [departureTime, setDepartureTime] = useState(defaultDepTime);
