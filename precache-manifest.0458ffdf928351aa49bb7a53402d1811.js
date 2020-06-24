@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a1a98096a7e0b877c5dbce8ffa513e8b",
+    "revision": "031494952a2bd39f8f435d0db89926a4",
     "url": "/booking/index.html"
   },
   {
-    "revision": "f8ea037cee3ad45d53a1",
+    "revision": "dfc52d9458450bf6045e",
     "url": "/booking/static/css/main.4d463a91.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/booking/static/js/2.e0630843.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f8ea037cee3ad45d53a1",
-    "url": "/booking/static/js/main.6c38c8b0.chunk.js"
+    "revision": "dfc52d9458450bf6045e",
+    "url": "/booking/static/js/main.3bf252a4.chunk.js"
   },
   {
     "revision": "3757a2d75200f99586ee",
