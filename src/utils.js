@@ -58,7 +58,7 @@ export const getClosestStation = (myLocation, stations) => {
   let closest = null;
   let min = Number.MAX_SAFE_INTEGER;
 
-  if (!myLocation || !stations.length) return null;
+  if (!myLocation || myLocation.error || !stations.length) return null;
 
   stations.forEach(station => {
     const earthRadius = 6378137;
