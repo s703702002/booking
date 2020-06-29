@@ -1,19 +1,30 @@
 import React from "react";
 import useSWR from "swr";
-import styled from "styled-components";
+
+import { withStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
+import Typography from "@material-ui/core/Typography";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 import { fetcher } from "apis/THSR";
 import { swrConfig } from "apis/config";
 
-const StyledTable = styled.table`
-  width: 100%;
-  background-color: #757de8;
-  th,
-  td {
-    padding: 0.3em;
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white
+  },
+  body: {
+    fontSize: 14
   }
-`;
+}))(TableCell);
 
 const PrizeDetail = ({ departure, arrival }) => {
   const shouldFetch = departure && arrival;
@@ -35,29 +46,33 @@ const PrizeDetail = ({ departure, arrival }) => {
     data[0].DestinationStationName.Zh_tw + data[0].DestinationStationName.En;
 
   return (
-    <div className="mt-3 mb-3">
-      <h3>票價資訊</h3>
-      <StyledTable>
-        <thead>
-          <tr>
-            <th colSpan="3">
-              {departureStation}
-              <ArrowRightAltIcon />
-              {arrivalStation}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {prizeList.map(v => (
-              <td key={v.Price}>
-                {v.TicketType}:<strong>&#36;{v.Price}</strong>
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </StyledTable>
-    </div>
+    <Box mt={2}>
+      <Box mb={1}>
+        <Typography variant="h4">票價資訊</Typography>
+      </Box>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell colSpan="3">
+                {departureStation}&nbsp;
+                <ArrowRightAltIcon />
+                &nbsp;{arrivalStation}
+              </StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              {prizeList.map(v => (
+                <TableCell key={v.Price}>
+                  {v.TicketType}: <strong>{v.Price}</strong> 元
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };
 
