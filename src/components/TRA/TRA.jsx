@@ -9,11 +9,21 @@ const TRA = () => {
   const [trainDate, setTrainDate] = useState("");
   const [departure, setDeparture] = useState("");
   const [arrival, setArrival] = useState("");
+  const [departureTime, setDepartureTime] = useState("");
+  const [arrivalTime, setArrivalTime] = useState("");
 
-  const onSearch = ({ date, departure, arrival }) => {
+  const onSearch = ({
+    date,
+    departure,
+    arrival,
+    departureTime,
+    arrivalTime
+  }) => {
     setTrainDate(date);
     setDeparture(departure);
     setArrival(arrival);
+    setDepartureTime(departureTime);
+    setArrivalTime(arrivalTime);
   };
 
   return (
@@ -28,6 +38,8 @@ const TRA = () => {
             departure={departure}
             arrival={arrival}
             trainDate={trainDate}
+            departureTime={departureTime}
+            arrivalTime={arrivalTime}
           />
         </Suspense>
       </Context.Provider>

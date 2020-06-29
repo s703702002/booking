@@ -1,9 +1,9 @@
 import React from "react";
+import { parseISO, differenceInMinutes } from "date-fns";
+
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-
-import { minsToTimes, timesToMins } from "utils";
 
 export const NoResults = () => (
   <TableRow>
@@ -11,12 +11,12 @@ export const NoResults = () => (
   </TableRow>
 );
 
-const Row = ({ detail }) => {
+const Row = ({ detail, trainDate }) => {
   const TrainNo = detail.DailyTrainInfo.TrainNo;
   const DepartureTime = detail.OriginStopTime.DepartureTime;
   const ArrivalTime = detail.DestinationStopTime.ArrivalTime;
-  const Dmins = timesToMins(DepartureTime);
-  const Amins = timesToMins(ArrivalTime);
+  const dTime = parseISO(`${trainDate} ${DepartureTime}`);
+  const aTime = parseISO(`${trainDate} ${ArrivalTime}`);
 
   return (
     <TableRow>
@@ -25,7 +25,7 @@ const Row = ({ detail }) => {
       </TableCell>
       <TableCell>{DepartureTime}</TableCell>
       <TableCell>{ArrivalTime}</TableCell>
-      <TableCell>{minsToTimes(Amins - Dmins)}</TableCell>
+      <TableCell>{differenceInMinutes(aTime, dTime)} 分</TableCell>
     </TableRow>
   );
 };

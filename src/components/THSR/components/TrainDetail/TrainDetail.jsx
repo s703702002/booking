@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import useSWR from "swr";
+import { parseISO, isBefore, isAfter, compareAsc, compareDesc } from "date-fns";
+
 import UnfoldMoreIcon from "@material-ui/icons/UnfoldMore";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,7 +11,6 @@ import TableRow from "@material-ui/core/TableRow";
 
 import { swrConfig } from "apis/config";
 import { fetcher } from "apis/THSR";
-import { timesToMins } from "utils";
 import SortIcon from "components/SortIcon";
 
 import Row, { NoResults } from "./components/Row";
@@ -35,14 +36,20 @@ const TrainDetail = ({
     swrConfig
   );
 
-  const depFilterTime = timesToMins(departureTime);
-  const arrFilterTime = timesToMins(arrivalTime);
+  const depFilterTime = parseISO(`${trainDate} ${departureTime}`);
+  const arrFilterTime = parseISO(`${trainDate} ${arrivalTime}`);
 
   const trainDetails = data
     ? data.filter(d => {
-        const depTime = timesToMins(d.OriginStopTime.DepartureTime);
-        const arrTime = timesToMins(d.DestinationStopTime.ArrivalTime);
-        return depTime > depFilterTime && arrTime < arrFilterTime;
+        const depTime = parseISO(
+          `${trainDate} ${d.OriginStopTime.DepartureTime}`
+        );
+        const arrTime = parseISO(
+          `${trainDate} ${d.DestinationStopTime.ArrivalTime}`
+        );
+        return (
+          isAfter(depTime, depFilterTime) && isBefore(arrTime, arrFilterTime)
+        );
       })
     : [];
 
@@ -58,19 +65,27 @@ const TrainDetail = ({
 
   const renderList = trainDetails.sort((a, b) => {
     if (sortBy === "departure") {
-      const aDepTimeMins = timesToMins(a.OriginStopTime.DepartureTime);
-      const bDepTimeMins = timesToMins(b.OriginStopTime.DepartureTime);
+      const aDepTime = parseISO(
+        `${trainDate} ${a.OriginStopTime.DepartureTime}`
+      );
+      const bDepTime = parseISO(
+        `${trainDate} ${b.OriginStopTime.DepartureTime}`
+      );
 
       return order === "desc"
-        ? bDepTimeMins - aDepTimeMins
-        : aDepTimeMins - bDepTimeMins;
+        ? compareDesc(aDepTime, bDepTime)
+        : compareAsc(aDepTime, bDepTime);
     } else if (sortBy === "arrival") {
-      const aArrTimeMins = timesToMins(a.DestinationStopTime.ArrivalTime);
-      const bArrTimeMins = timesToMins(b.DestinationStopTime.ArrivalTime);
+      const aArrTime = parseISO(
+        `${trainDate} ${a.DestinationStopTime.ArrivalTime}`
+      );
+      const bArrTime = parseISO(
+        `${trainDate} ${b.DestinationStopTime.ArrivalTime}`
+      );
 
       return order === "desc"
-        ? bArrTimeMins - aArrTimeMins
-        : aArrTimeMins - bArrTimeMins;
+        ? compareDesc(aArrTime, bArrTime)
+        : compareAsc(aArrTime, bArrTime);
     } else {
       return true;
     }
@@ -104,7 +119,11 @@ const TrainDetail = ({
         <TableBody>
           {renderList.length > 0 ? (
             renderList.map(detail => (
-              <Row key={detail.DailyTrainInfo.TrainNo} detail={detail} />
+              <Row
+                key={detail.DailyTrainInfo.TrainNo}
+                detail={detail}
+                trainDate={trainDate}
+              />
             ))
           ) : (
             <NoResults />

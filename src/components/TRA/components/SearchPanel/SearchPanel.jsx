@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-
 import useSWR from "swr";
+import { format, add } from "date-fns";
+
+import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -10,9 +12,10 @@ import Box from "@material-ui/core/Box";
 import FormControl from "@material-ui/core/FormControl";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 
+import { TimeSelect } from "components/Select";
 import { swrConfig } from "apis/config";
 import { fetcher } from "apis/TRA";
-import { formatDate, getClosestStation } from "utils";
+import { getClosestStation } from "utils";
 import useGeoLocation from "hooks/useGeoLocation";
 
 const Option = option => {
@@ -26,10 +29,16 @@ const Option = option => {
   );
 };
 
-const SearchForm = ({ onSearch }) => {
-  const [date, setDate] = useState(() => formatDate(Date.now()));
+const SearchPanel = ({ onSearch }) => {
+  const [date, setDate] = useState(format(Date.now(), "yyyy-MM-dd"));
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
+  const [departureTime, setDepartureTime] = useState(
+    format(Date.now(), "HH:00")
+  );
+  const [arrivalTime, setArriveTime] = useState(
+    format(add(Date.now(), { hours: 3 }), "HH:00")
+  );
   const location = useGeoLocation();
 
   // GET 取得車站基本資料
@@ -39,10 +48,13 @@ const SearchForm = ({ onSearch }) => {
     swrConfig
   );
 
-  const closestStation = getClosestStation(location, data);
+  // 過濾掉 台北-環島站
+  const filteredData = data ? data.filter(v => v.StationID !== "1001") : [];
 
-  const stations = data
-    ? [closestStation, ...data].filter(v => v !== null)
+  const closestStation = getClosestStation(location, filteredData);
+
+  const stations = filteredData
+    ? [closestStation, ...filteredData].filter(v => v !== null)
     : [];
 
   const depArrSwitch = () => {
@@ -54,7 +66,9 @@ const SearchForm = ({ onSearch }) => {
     onSearch({
       date,
       departure,
-      arrival
+      arrival,
+      departureTime,
+      arrivalTime
     });
 
   return (
@@ -112,6 +126,24 @@ const SearchForm = ({ onSearch }) => {
               getOptionDisabled={o => o.disabled}
             />
           </FormControl>
+          <FormControl margin="normal" fullWidth variant="outlined">
+            <InputLabel id="DepartureTime">最早出發</InputLabel>
+            <TimeSelect
+              label="最早出發"
+              labelId="DepartureTime"
+              value={departureTime}
+              onChange={e => setDepartureTime(e.target.value)}
+            />
+          </FormControl>
+          <FormControl margin="normal" fullWidth variant="outlined">
+            <InputLabel id="ArrivalTime">最晚抵達</InputLabel>
+            <TimeSelect
+              label="最晚抵達"
+              labelId="ArrivalTime"
+              value={arrivalTime}
+              onChange={e => setArriveTime(e.target.value)}
+            />
+          </FormControl>
           <FormControl fullWidth margin="normal">
             <Button
               size="large"
@@ -130,4 +162,4 @@ const SearchForm = ({ onSearch }) => {
   );
 };
 
-export default SearchForm;
+export default SearchPanel;

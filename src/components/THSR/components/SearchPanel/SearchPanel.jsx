@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useSWR from "swr";
+import { format, add } from "date-fns";
 
 import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -12,16 +13,17 @@ import Box from "@material-ui/core/Box";
 import Select, { TimeSelect } from "components/Select";
 import { swrConfig } from "apis/config";
 import { fetcher } from "apis/THSR";
-import { formatDate, getDefaultHour } from "utils";
 
-const { defaultDepTime, defaultArrTime } = getDefaultHour();
-
-const SearchForm = ({ onSearch, className }) => {
-  const [date, setDate] = useState(() => formatDate(Date.now()));
+const SearchPanel = ({ onSearch, className }) => {
+  const [date, setDate] = useState(format(Date.now(), "yyyy-MM-dd"));
   const [departure, setDeparture] = useState("1000"); // 台北
   const [arrival, setArrival] = useState("1070"); // 左營
-  const [departureTime, setDepartureTime] = useState(defaultDepTime);
-  const [arrivalTime, setArriveTime] = useState(defaultArrTime);
+  const [departureTime, setDepartureTime] = useState(
+    format(Date.now(), "HH:00")
+  );
+  const [arrivalTime, setArriveTime] = useState(
+    format(add(Date.now(), { hours: 3 }), "HH:00")
+  );
 
   // GET 取得車站基本資料
   const { data } = useSWR("/v2/Rail/THSR/Station", fetcher, swrConfig);
@@ -121,4 +123,4 @@ const SearchForm = ({ onSearch, className }) => {
   );
 };
 
-export default SearchForm;
+export default SearchPanel;

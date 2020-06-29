@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useSWR from "swr";
+import { parseISO, isBefore, isAfter, compareAsc, compareDesc } from "date-fns";
 
 import UnfoldMoreIcon from "@material-ui/icons/UnfoldMore";
 import Table from "@material-ui/core/Table";
@@ -10,12 +11,17 @@ import TableRow from "@material-ui/core/TableRow";
 
 import { swrConfig } from "apis/config";
 import { fetcher } from "apis/THSR";
-import { timesToMins } from "utils";
 
 import Row, { NoResults } from "./components/Row";
 import SortIcon from "components/SortIcon";
 
-const TrainDetail = ({ departure, arrival, trainDate }) => {
+const TrainDetail = ({
+  departure,
+  arrival,
+  trainDate,
+  departureTime,
+  arrivalTime
+}) => {
   const [sortBy, setSortBy] = useState();
   const [order, setOrder] = useState();
 
@@ -30,6 +36,9 @@ const TrainDetail = ({ departure, arrival, trainDate }) => {
     swrConfig
   );
 
+  const depFilterTime = parseISO(`${trainDate} ${departureTime}`);
+  const arrFilterTime = parseISO(`${trainDate} ${arrivalTime}`);
+
   const onClickDepartureSort = () => {
     setSortBy("departure");
     setOrder(order === "desc" ? "asc" : "desc");
@@ -40,23 +49,43 @@ const TrainDetail = ({ departure, arrival, trainDate }) => {
     setOrder(order === "desc" ? "asc" : "desc");
   };
 
-  const trainDetails = data ? data : [];
+  const trainDetails = data
+    ? data.filter(d => {
+        const depTime = parseISO(
+          `${trainDate} ${d.OriginStopTime.DepartureTime}`
+        );
+        const arrTime = parseISO(
+          `${trainDate} ${d.DestinationStopTime.ArrivalTime}`
+        );
+        return (
+          isAfter(depTime, depFilterTime) && isBefore(arrTime, arrFilterTime)
+        );
+      })
+    : [];
 
   const renderList = trainDetails.sort((a, b) => {
     if (sortBy === "departure") {
-      const aDepTimeMins = timesToMins(a.OriginStopTime.DepartureTime);
-      const bDepTimeMins = timesToMins(b.OriginStopTime.DepartureTime);
+      const aDepTime = parseISO(
+        `${trainDate} ${a.OriginStopTime.DepartureTime}`
+      );
+      const bDepTime = parseISO(
+        `${trainDate} ${b.OriginStopTime.DepartureTime}`
+      );
 
       return order === "desc"
-        ? bDepTimeMins - aDepTimeMins
-        : aDepTimeMins - bDepTimeMins;
+        ? compareDesc(aDepTime, bDepTime)
+        : compareAsc(aDepTime, bDepTime);
     } else if (sortBy === "arrival") {
-      const aArrTimeMins = timesToMins(a.DestinationStopTime.ArrivalTime);
-      const bArrTimeMins = timesToMins(b.DestinationStopTime.ArrivalTime);
+      const aArrTime = parseISO(
+        `${trainDate} ${a.DestinationStopTime.ArrivalTime}`
+      );
+      const bArrTime = parseISO(
+        `${trainDate} ${b.DestinationStopTime.ArrivalTime}`
+      );
 
       return order === "desc"
-        ? bArrTimeMins - aArrTimeMins
-        : aArrTimeMins - bArrTimeMins;
+        ? compareDesc(aArrTime, bArrTime)
+        : compareAsc(aArrTime, bArrTime);
     } else {
       return true;
     }

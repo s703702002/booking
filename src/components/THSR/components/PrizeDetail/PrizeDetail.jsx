@@ -1,13 +1,14 @@
 import React from "react";
 import useSWR from "swr";
-
 import styled from "styled-components";
+import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
+
 import { fetcher } from "apis/THSR";
 import { swrConfig } from "apis/config";
 
 const StyledTable = styled.table`
   width: 100%;
-  background-color: #aeeff9;
+  background-color: #757de8;
   th,
   td {
     padding: 0.3em;
@@ -41,7 +42,7 @@ const PrizeDetail = ({ departure, arrival }) => {
           <tr>
             <th colSpan="3">
               {departureStation}
-              <span className="ml-2 mr-2">&rarr;</span>
+              <ArrowRightAltIcon />
               {arrivalStation}
             </th>
           </tr>
