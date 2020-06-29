@@ -20,7 +20,8 @@ const TrainDetail = ({
   arrival,
   trainDate,
   departureTime,
-  arrivalTime
+  arrivalTime,
+  trainType
 }) => {
   const [sortBy, setSortBy] = useState();
   const [order, setOrder] = useState();
@@ -49,18 +50,26 @@ const TrainDetail = ({
     setOrder(order === "desc" ? "asc" : "desc");
   };
 
+  const trainTypeFilter = trainType.map(v => v.value);
+  const shouldFilterByTrainType = !trainTypeFilter.includes("0");
+
   const trainDetails = data
-    ? data.filter(d => {
-        const depTime = parseISO(
-          `${trainDate} ${d.OriginStopTime.DepartureTime}`
-        );
-        const arrTime = parseISO(
-          `${trainDate} ${d.DestinationStopTime.ArrivalTime}`
-        );
-        return (
-          isAfter(depTime, depFilterTime) && isBefore(arrTime, arrFilterTime)
-        );
-      })
+    ? data
+        .filter(d => {
+          const depTime = parseISO(
+            `${trainDate} ${d.OriginStopTime.DepartureTime}`
+          );
+          const arrTime = parseISO(
+            `${trainDate} ${d.DestinationStopTime.ArrivalTime}`
+          );
+          return (
+            isAfter(depTime, depFilterTime) && isBefore(arrTime, arrFilterTime)
+          );
+        })
+        .filter(d => {
+          if (!shouldFilterByTrainType) return true;
+          return trainTypeFilter.includes(d.DailyTrainInfo.TrainTypeCode);
+        })
     : [];
 
   const renderList = trainDetails.sort((a, b) => {

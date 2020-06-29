@@ -18,6 +18,8 @@ import { fetcher } from "apis/TRA";
 import { getClosestStation } from "utils";
 import useGeoLocation from "hooks/useGeoLocation";
 
+import TrainTypeSelect from "./components/TrainTypeSelect";
+
 const Option = option => {
   return (
     <>
@@ -39,6 +41,7 @@ const SearchPanel = ({ onSearch }) => {
   const [arrivalTime, setArriveTime] = useState(
     format(add(Date.now(), { hours: 3 }), "HH:00")
   );
+  const [trainType, setTrainType] = useState([{ text: "不限", value: "0" }]);
   const location = useGeoLocation();
 
   // GET 取得車站基本資料
@@ -68,7 +71,8 @@ const SearchPanel = ({ onSearch }) => {
       departure,
       arrival,
       departureTime,
-      arrivalTime
+      arrivalTime,
+      trainType
     });
 
   return (
@@ -144,6 +148,13 @@ const SearchPanel = ({ onSearch }) => {
               onChange={e => setArriveTime(e.target.value)}
             />
           </FormControl>
+          <FormControl margin="normal" fullWidth variant="outlined">
+            <TrainTypeSelect
+              name="trainType"
+              id="trainType"
+              onChange={(e, v) => setTrainType(v)}
+            />
+          </FormControl>
           <FormControl fullWidth margin="normal">
             <Button
               size="large"
@@ -151,7 +162,7 @@ const SearchPanel = ({ onSearch }) => {
               color="primary"
               fullWidth
               onClick={handleSearch}
-              disabled={!departure || !arrival}
+              disabled={!departure || !arrival || trainType.length < 1}
             >
               查詢
             </Button>
