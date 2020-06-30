@@ -1,5 +1,6 @@
 import React, { Suspense, useState } from "react";
 import { Typography } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 
 import SearchPanel from "./components/SearchPanel";
 import TrainDetail from "./components/TrainDetail";
@@ -30,8 +31,10 @@ const TRA = () => {
   };
 
   return (
-    <div>
-      <Typography variant="h3">台鐵時刻查詢</Typography>
+    <Box paddingBottom={8}>
+      <Typography align="center" variant="h3">
+        台鐵時刻查詢
+      </Typography>
       <Suspense fallback={<div>Get stations...</div>}>
         <SearchPanel onSearch={onSearch} />
       </Suspense>
@@ -47,7 +50,7 @@ const TRA = () => {
           />
         </Suspense>
       </Context.Provider>
-    </div>
+    </Box>
   );
 };
 

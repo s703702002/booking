@@ -1,32 +1,9 @@
 import React from "react";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import { withStyles } from "@material-ui/core/styles";
-
-const StyledSelect = withStyles({
-  root: {
-    textAlign: "left"
-  }
-})(Select);
-
-const Selector = ({ options, ...props }) => {
-  return (
-    <StyledSelect {...props}>
-      {options.length > 0 ? (
-        options.map(o => (
-          <MenuItem key={o.value} value={o.value}>
-            {o.Zh_tw + o.En}
-          </MenuItem>
-        ))
-      ) : (
-        <MenuItem value="">無資料</MenuItem>
-      )}
-    </StyledSelect>
-  );
-};
 
 export const TimeSelect = props => (
-  <StyledSelect {...props}>
+  <Select {...props}>
     <MenuItem value="06:00">06:00</MenuItem>
     <MenuItem value="07:00">07:00</MenuItem>
     <MenuItem value="08:00">08:00</MenuItem>
@@ -46,7 +23,23 @@ export const TimeSelect = props => (
     <MenuItem value="22:00">22:00</MenuItem>
     <MenuItem value="23:00">23:00</MenuItem>
     <MenuItem value="24:00">24:00</MenuItem>
-  </StyledSelect>
+  </Select>
 );
+
+const Selector = ({ options, ...props }) => {
+  return (
+    <Select {...props}>
+      {options.length > 0 ? (
+        options.map(o => (
+          <MenuItem key={o.value} value={o.value}>
+            {o.Zh_tw + o.En}
+          </MenuItem>
+        ))
+      ) : (
+        <MenuItem value="">無資料</MenuItem>
+      )}
+    </Select>
+  );
+};
 
 export default Selector;

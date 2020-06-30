@@ -107,12 +107,18 @@ const SearchPanel = ({ onSearch }) => {
               getOptionDisabled={o => o.disabled}
             />
           </FormControl>
-          <FormControl margin="normal">
-            <Button variant="contained" color="primary" onClick={depArrSwitch}>
+          <FormControl margin="normal" fullWidth>
+            <Button
+              style={{ width: 150, margin: "0 auto" }}
+              size="small"
+              variant="contained"
+              color="primary"
+              onClick={depArrSwitch}
+            >
               起迄站交換
             </Button>
           </FormControl>
-          <FormControl fullWidth variant="outlined">
+          <FormControl margin="normal" fullWidth variant="outlined">
             <Autocomplete
               name="DestinationStation"
               id="DestinationStation"

@@ -48,7 +48,9 @@ const PrizeDetail = ({ departure, arrival }) => {
   return (
     <Box mt={2}>
       <Box mb={1}>
-        <Typography variant="h4">票價資訊</Typography>
+        <Typography align="center" variant="h4">
+          票價資訊
+        </Typography>
       </Box>
       <TableContainer component={Paper}>
         <Table>

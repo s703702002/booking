@@ -1,16 +1,14 @@
 const {
   override,
   useEslintRc,
-  disableEsLint,
   addWebpackResolve,
-  addBabelPlugins
+  useBabelRc
 } = require("customize-cra");
 
 module.exports = override(
   useEslintRc(),
-  disableEsLint(),
+  useBabelRc(),
   addWebpackResolve({
-    modules: ["node_modules", "src"]
-  }),
-  ...addBabelPlugins("@babel/plugin-proposal-optional-chaining")
+    modules: ["src", "node_modules"]
+  })
 );

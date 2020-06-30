@@ -1,5 +1,6 @@
 import React, { useState, Suspense } from "react";
 import { Typography } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 
 import TrainDetail from "./components/TrainDetail";
 import PrizeDetail from "./components/PrizeDetail";
@@ -27,8 +28,10 @@ const THSR = () => {
   };
 
   return (
-    <div>
-      <Typography variant="h3">高鐵時刻查詢</Typography>
+    <Box paddingBottom={8}>
+      <Typography align="center" variant="h3">
+        高鐵時刻查詢
+      </Typography>
       <Suspense fallback={<div>Get stations...</div>}>
         <SearchPanel onSearch={searchClick} />
       </Suspense>
@@ -44,7 +47,7 @@ const THSR = () => {
       <Suspense fallback={<div>Get prize detail...</div>}>
         <PrizeDetail departure={departure} arrival={arrival} />
       </Suspense>
-    </div>
+    </Box>
   );
 };
 
