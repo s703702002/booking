@@ -8,12 +8,14 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Typography from "@material-ui/core/Typography";
 
 import { swrConfig } from "apis/config";
 import { fetcher } from "apis/THSR";
 
-import Row, { NoResults } from "./components/Row";
 import SortIcon from "components/SortIcon";
+import BottomFooter from "components/BottomFooter";
+import Row, { NoResults } from "./components/Row";
 
 const TrainDetail = ({
   departure,
@@ -101,13 +103,13 @@ const TrainDetail = ({
   });
 
   return (
-    <div>
+    <>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>車號</TableCell>
             <TableCell onClick={onClickDepartureSort}>
-              <span>發車</span>
+              發車
               {sortBy === "departure" ? (
                 <SortIcon order={order} />
               ) : (
@@ -115,7 +117,7 @@ const TrainDetail = ({
               )}
             </TableCell>
             <TableCell onClick={onClickArrivalSort}>
-              <span>到達</span>
+              到達
               {sortBy === "arrival" ? (
                 <SortIcon order={order} />
               ) : (
@@ -135,10 +137,10 @@ const TrainDetail = ({
           )}
         </TableBody>
       </Table>
-      <footer className="fixed-bottom">
-        <p>更新時間: {data?.[0]?.UpdateTime || "---"}</p>
-      </footer>
-    </div>
+      <BottomFooter>
+        <Typography>更新時間: {data?.[0]?.UpdateTime || "---"}</Typography>
+      </BottomFooter>
+    </>
   );
 };
 

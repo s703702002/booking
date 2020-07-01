@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from "react";
-import "./App.css";
 
 import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
@@ -77,6 +76,13 @@ function App() {
       createMuiTheme({
         palette: {
           type: darkModeEnabled ? "dark" : "light"
+        },
+        overrides: {
+          MuiSvgIcon: {
+            root: {
+              verticalAlign: "middle"
+            }
+          }
         }
       }),
     [darkModeEnabled]

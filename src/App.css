@@ -1,16 +1,1 @@
-p {
-  margin: 0;
-}
 
-img {
-  max-width: 100%;
-}
-
-footer {
-  background-color: #4d4d4d;
-  color: #fff;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
