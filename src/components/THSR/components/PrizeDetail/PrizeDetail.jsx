@@ -13,8 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import { fetcher } from 'apis/config';
-import { swrConfig } from 'apis/config';
+import { fetcher, swrConfig } from 'apis/config';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
