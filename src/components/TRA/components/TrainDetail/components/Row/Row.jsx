@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
-import useToggle from "hooks/useToggle";
-import TrainInfoDialog from "./components/TrainInfoDialog";
+import useToggle from 'hooks/useToggle';
+import TrainInfoDialog from './components/TrainInfoDialog';
 
 export const NoResults = () => (
   <TableRow>

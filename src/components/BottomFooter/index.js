@@ -1,3 +1,3 @@
-import BottomFooter from "./BottomFooter";
+import BottomFooter from './BottomFooter';
 
 export default BottomFooter;

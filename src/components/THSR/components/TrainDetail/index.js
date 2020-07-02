@@ -1,3 +1,3 @@
-import TrainDetail from "./TrainDetail";
+import TrainDetail from './TrainDetail';
 
 export default TrainDetail;

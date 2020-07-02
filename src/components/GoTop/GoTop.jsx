@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 
-import Fab from "@material-ui/core/Fab";
-import { makeStyles } from "@material-ui/core/styles";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Zoom from "@material-ui/core/Zoom";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import Fab from '@material-ui/core/Fab';
+import { makeStyles } from '@material-ui/core/styles';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import Zoom from '@material-ui/core/Zoom';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    position: "fixed",
+    position: 'fixed',
     bottom: theme.spacing(4),
     right: theme.spacing(2),
     zIndex: 1200
@@ -24,11 +24,11 @@ function ScrollTop() {
 
   const handleClick = event => {
     const anchor = (event.target.ownerDocument || document).querySelector(
-      "#back-to-top-anchor"
+      '#back-to-top-anchor'
     );
 
     if (anchor) {
-      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
 

@@ -1,3 +1,3 @@
-import DailyTimeTable from "./DailyTimeTable";
+import DailyTimeTable from './DailyTimeTable';
 
 export default DailyTimeTable;

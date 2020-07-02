@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
-import useSWR from "swr";
+import React, { useContext } from 'react';
+import useSWR from 'swr';
 
-import Timeline from "@material-ui/lab/Timeline";
-import TimelineItem from "@material-ui/lab/TimelineItem";
-import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
-import TimelineConnector from "@material-ui/lab/TimelineConnector";
-import TimelineContent from "@material-ui/lab/TimelineContent";
-import TimelineDot from "@material-ui/lab/TimelineDot";
-import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
-import Typography from "@material-ui/core/Typography";
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
+import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
+import Typography from '@material-ui/core/Typography';
 
-import { swrConfig, fetcher } from "apis/config";
-import Context from "components/TRA/context";
+import { swrConfig, fetcher } from 'apis/config';
+import Context from 'components/TRA/context';
 
 const Station = ({ station, isFirstStaion, isLastStation }) => {
   const { departure, arrival } = useContext(Context);
@@ -20,9 +20,9 @@ const Station = ({ station, isFirstStaion, isLastStation }) => {
     station.StationID === arrival.StationID;
 
   const dotColor = isTargetStation
-    ? "secondary"
+    ? 'secondary'
     : isFirstStaion || isLastStation
-    ? "primary"
+    ? 'primary'
     : undefined;
 
   const stationName = `${station.StationName.Zh_tw} ${station.StationName.En}`;

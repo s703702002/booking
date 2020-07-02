@@ -1,3 +1,3 @@
-import TrainInfoDialog from "./TrainInfoDialog";
+import TrainInfoDialog from './TrainInfoDialog';
 
 export default TrainInfoDialog;

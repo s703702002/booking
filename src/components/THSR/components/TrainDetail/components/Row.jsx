@@ -1,9 +1,9 @@
-import React from "react";
-import { parseISO, differenceInMinutes } from "date-fns";
+import React from 'react';
+import { parseISO, differenceInMinutes } from 'date-fns';
 
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
 
 export const NoResults = () => (
   <TableRow>

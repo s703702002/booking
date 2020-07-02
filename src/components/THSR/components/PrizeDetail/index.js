@@ -1,3 +1,3 @@
-import PrizeDetail from "./PrizeDetail";
+import PrizeDetail from './PrizeDetail';
 
 export default PrizeDetail;

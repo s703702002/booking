@@ -1,3 +1,3 @@
-import TrainTypeSelect from "./TrainTypeSelect";
+import TrainTypeSelect from './TrainTypeSelect';
 
 export default TrainTypeSelect;

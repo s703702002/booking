@@ -1,17 +1,17 @@
-import React, { Suspense, useState } from "react";
-import { Typography } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
+import React, { Suspense, useState } from 'react';
+import { Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
-import SearchPanel from "./components/SearchPanel";
-import TrainDetail from "./components/TrainDetail";
-import Context from "./context";
+import SearchPanel from './components/SearchPanel';
+import TrainDetail from './components/TrainDetail';
+import Context from './context';
 
 const TRA = () => {
-  const [trainDate, setTrainDate] = useState("");
-  const [departure, setDeparture] = useState("");
-  const [arrival, setArrival] = useState("");
-  const [departureTime, setDepartureTime] = useState("");
-  const [arrivalTime, setArrivalTime] = useState("");
+  const [trainDate, setTrainDate] = useState('');
+  const [departure, setDeparture] = useState('');
+  const [arrival, setArrival] = useState('');
+  const [departureTime, setDepartureTime] = useState('');
+  const [arrivalTime, setArrivalTime] = useState('');
   const [trainType, setTrainType] = useState([]);
 
   const onSearch = ({

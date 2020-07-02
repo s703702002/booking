@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const BottomFooter = styled.footer`
   width: 100vw;

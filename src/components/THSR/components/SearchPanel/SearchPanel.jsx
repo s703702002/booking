@@ -1,31 +1,31 @@
-import React, { useState } from "react";
-import useSWR from "swr";
-import { format, add } from "date-fns";
+import React, { useState } from 'react';
+import useSWR from 'swr';
+import { format, add } from 'date-fns';
 
-import { TextField } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
+import { TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 
-import Select, { TimeSelect } from "components/Select";
-import { swrConfig, fetcher } from "apis/config";
+import Select, { TimeSelect } from 'components/Select';
+import { swrConfig, fetcher } from 'apis/config';
 
 const SearchPanel = ({ onSearch, className }) => {
-  const [date, setDate] = useState(format(Date.now(), "yyyy-MM-dd"));
-  const [departure, setDeparture] = useState("1000"); // 台北
-  const [arrival, setArrival] = useState("1070"); // 左營
+  const [date, setDate] = useState(format(Date.now(), 'yyyy-MM-dd'));
+  const [departure, setDeparture] = useState('1000'); // 台北
+  const [arrival, setArrival] = useState('1070'); // 左營
   const [departureTime, setDepartureTime] = useState(
-    format(Date.now(), "HH:00")
+    format(Date.now(), 'HH:00')
   );
   const [arrivalTime, setArriveTime] = useState(
-    format(add(Date.now(), { hours: 3 }), "HH:00")
+    format(add(Date.now(), { hours: 3 }), 'HH:00')
   );
 
   // GET 取得車站基本資料
-  const { data } = useSWR("/v2/Rail/THSR/Station", fetcher, swrConfig);
+  const { data } = useSWR('/v2/Rail/THSR/Station', fetcher, swrConfig);
 
   const stations = data
     ? data.map(val => ({
@@ -74,7 +74,7 @@ const SearchPanel = ({ onSearch, className }) => {
           </FormControl>
           <FormControl margin="normal" fullWidth>
             <Button
-              style={{ width: 150, margin: "0 auto" }}
+              style={{ width: 150, margin: '0 auto' }}
               size="small"
               variant="contained"
               color="primary"

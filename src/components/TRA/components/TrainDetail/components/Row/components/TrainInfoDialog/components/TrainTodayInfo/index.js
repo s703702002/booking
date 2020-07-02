@@ -1,3 +1,3 @@
-import TrainTodayInfo from "./TrainTodayInfo";
+import TrainTodayInfo from './TrainTodayInfo';
 
 export default TrainTodayInfo;

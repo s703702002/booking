@@ -1,1 +1,1 @@
-export { default, TimeSelect } from "./Select";
+export { default, TimeSelect } from './Select';

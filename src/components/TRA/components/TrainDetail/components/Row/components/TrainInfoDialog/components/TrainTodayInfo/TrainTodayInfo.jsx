@@ -1,49 +1,49 @@
-import React from "react";
-import useSWR from "swr";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
+import React from 'react';
+import useSWR from 'swr';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
-import { swrConfig, fetcher } from "apis/config";
+import { swrConfig, fetcher } from 'apis/config';
 
 const tripLine = {
-  0: "不經山海線",
-  1: "山線",
-  2: "海線"
+  0: '不經山海線',
+  1: '山線',
+  2: '海線'
 };
 
 const wheelChairFlag = {
-  0: "否",
-  1: "是"
+  0: '否',
+  1: '是'
 };
 
 const packageServiceFlag = {
-  0: "否",
-  1: "是"
+  0: '否',
+  1: '是'
 };
 
 const diningFlag = {
-  0: "否",
-  1: "是"
+  0: '否',
+  1: '是'
 };
 
 const bikeFlag = {
-  0: "否",
-  1: "是"
+  0: '否',
+  1: '是'
 };
 
 const breastFeedingFlag = {
-  0: "否",
-  1: "是"
+  0: '否',
+  1: '是'
 };
 
 const dailyFlag = {
-  0: "否",
-  1: "是"
+  0: '否',
+  1: '是'
 };
 
 const serviceAddedFlag = {
-  0: "否",
-  1: "是"
+  0: '否',
+  1: '是'
 };
 
 const TrainTodayInfo = ({ trainNo }) => {

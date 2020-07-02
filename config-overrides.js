@@ -3,12 +3,12 @@ const {
   useEslintRc,
   addWebpackResolve,
   useBabelRc
-} = require("customize-cra");
+} = require('customize-cra');
 
 module.exports = override(
   useEslintRc(),
   useBabelRc(),
   addWebpackResolve({
-    modules: ["src", "node_modules"]
+    modules: ['src', 'node_modules']
   })
 );

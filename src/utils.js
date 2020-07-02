@@ -44,7 +44,7 @@ export const getClosestStation = (myLocation, stations) => {
     ...closest,
     StationName: {
       Zh_tw: `最近的車站: ${closest.StationName.Zh_tw}`,
-      En: ""
+      En: ''
     },
     icon: true,
     disabled: Boolean(myLocation?.error)

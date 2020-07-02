@@ -1,3 +1,3 @@
-import THSR from "./THSR";
+import THSR from './THSR';
 
 export default THSR;

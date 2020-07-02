@@ -1,29 +1,29 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo } from 'react';
 
-import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Brightness4Icon from "@material-ui/icons/Brightness4";
-import Brightness7Icon from "@material-ui/icons/Brightness7";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Box from '@material-ui/core/Box';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import {
   createMuiTheme,
   makeStyles,
   ThemeProvider
-} from "@material-ui/core/styles";
+} from '@material-ui/core/styles';
 
-import CssBaseline from "@material-ui/core/CssBaseline";
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-import GoTop from "./components/GoTop";
-import THSR from "./components/THSR";
-import TRA from "./components/TRA";
+import GoTop from './components/GoTop';
+import THSR from './components/THSR';
+import TRA from './components/TRA';
 
-import useToggle from "./hooks/useToggle";
+import useToggle from './hooks/useToggle';
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -75,12 +75,12 @@ function App() {
     () =>
       createMuiTheme({
         palette: {
-          type: darkModeEnabled ? "dark" : "light"
+          type: darkModeEnabled ? 'dark' : 'light'
         },
         overrides: {
           MuiSvgIcon: {
             root: {
-              verticalAlign: "middle"
+              verticalAlign: 'middle'
             }
           }
         }

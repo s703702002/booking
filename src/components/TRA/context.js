@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 const formContext = React.createContext({
-  trainDate: "",
-  departure: "",
-  arrival: "",
-  departureTime: "",
-  arrivalTime: ""
+  trainDate: '',
+  departure: '',
+  arrival: '',
+  departureTime: '',
+  arrivalTime: ''
 });
 
 export default formContext;

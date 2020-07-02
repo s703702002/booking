@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import useSWR from "swr";
-import { format, add } from "date-fns";
+import React, { useState } from 'react';
+import useSWR from 'swr';
+import { format, add } from 'date-fns';
 
-import InputLabel from "@material-ui/core/InputLabel";
-import Button from "@material-ui/core/Button";
-import { TextField } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-import FormControl from "@material-ui/core/FormControl";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
+import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button';
+import { TextField } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import FormControl from '@material-ui/core/FormControl';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
-import { TimeSelect } from "components/Select";
-import { swrConfig, fetcher } from "apis/config";
-import { getClosestStation } from "utils";
-import useGeoLocation from "hooks/useGeoLocation";
+import { TimeSelect } from 'components/Select';
+import { swrConfig, fetcher } from 'apis/config';
+import { getClosestStation } from 'utils';
+import useGeoLocation from 'hooks/useGeoLocation';
 
-import TrainTypeSelect from "./components/TrainTypeSelect";
+import TrainTypeSelect from './components/TrainTypeSelect';
 
 const Option = option => {
   return (
@@ -25,33 +25,33 @@ const Option = option => {
       {option.icon && (
         <LocationOnIcon color="primary" style={{ marginRight: 8 }} />
       )}
-      {option.StationName.Zh_tw + " " + option.StationName.En}
+      {option.StationName.Zh_tw + ' ' + option.StationName.En}
     </>
   );
 };
 
 const SearchPanel = ({ onSearch }) => {
-  const [date, setDate] = useState(format(Date.now(), "yyyy-MM-dd"));
+  const [date, setDate] = useState(format(Date.now(), 'yyyy-MM-dd'));
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
   const [departureTime, setDepartureTime] = useState(
-    format(Date.now(), "HH:00")
+    format(Date.now(), 'HH:00')
   );
   const [arrivalTime, setArriveTime] = useState(
-    format(add(Date.now(), { hours: 3 }), "HH:00")
+    format(add(Date.now(), { hours: 3 }), 'HH:00')
   );
-  const [trainType, setTrainType] = useState([{ text: "不限", value: "0" }]);
+  const [trainType, setTrainType] = useState([{ text: '不限', value: '0' }]);
   const location = useGeoLocation();
 
   // GET 取得車站基本資料
   const { data } = useSWR(
-    "/v2/Rail/TRA/Station?$top=500&$format=JSON",
+    '/v2/Rail/TRA/Station?$top=500&$format=JSON',
     fetcher,
     swrConfig
   );
 
   // 過濾掉 台北-環島站
-  const filteredData = data ? data.filter(v => v.StationID !== "1001") : [];
+  const filteredData = data ? data.filter(v => v.StationID !== '1001') : [];
 
   const closestStation = getClosestStation(location, filteredData);
 
@@ -100,7 +100,7 @@ const SearchPanel = ({ onSearch }) => {
               )}
               renderOption={Option}
               getOptionLabel={({ StationName }) =>
-                StationName.Zh_tw + " " + StationName.En
+                StationName.Zh_tw + ' ' + StationName.En
               }
               getOptionSelected={(o, v) => o.StationUID === v.StationUID}
               getOptionDisabled={o => o.disabled}
@@ -108,7 +108,7 @@ const SearchPanel = ({ onSearch }) => {
           </FormControl>
           <FormControl margin="normal" fullWidth>
             <Button
-              style={{ width: 150, margin: "0 auto" }}
+              style={{ width: 150, margin: '0 auto' }}
               size="small"
               variant="contained"
               color="primary"
@@ -129,7 +129,7 @@ const SearchPanel = ({ onSearch }) => {
               )}
               renderOption={Option}
               getOptionLabel={option =>
-                option.StationName.Zh_tw + " " + option.StationName.En
+                option.StationName.Zh_tw + ' ' + option.StationName.En
               }
               getOptionSelected={(o, v) => o.StationUID === v.StationUID}
               getOptionDisabled={o => o.disabled}

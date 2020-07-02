@@ -1,3 +1,3 @@
-import TRA from "./TRA";
+import TRA from './TRA';
 
 export default TRA;

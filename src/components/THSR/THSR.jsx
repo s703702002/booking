@@ -1,17 +1,17 @@
-import React, { useState, Suspense } from "react";
-import { Typography } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
+import React, { useState, Suspense } from 'react';
+import { Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
-import TrainDetail from "./components/TrainDetail";
-import PrizeDetail from "./components/PrizeDetail";
-import SearchPanel from "./components/SearchPanel";
+import TrainDetail from './components/TrainDetail';
+import PrizeDetail from './components/PrizeDetail';
+import SearchPanel from './components/SearchPanel';
 
 const THSR = () => {
-  const [trainDate, setTrainDate] = useState("");
-  const [departure, setDeparture] = useState("");
-  const [arrival, setArrival] = useState("");
-  const [departureTime, setDepartureTime] = useState("");
-  const [arrivalTime, setArrivalTime] = useState("");
+  const [trainDate, setTrainDate] = useState('');
+  const [departure, setDeparture] = useState('');
+  const [arrival, setArrival] = useState('');
+  const [departureTime, setDepartureTime] = useState('');
+  const [arrivalTime, setArrivalTime] = useState('');
 
   const searchClick = ({
     date,
