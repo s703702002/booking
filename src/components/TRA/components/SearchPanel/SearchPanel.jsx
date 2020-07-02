@@ -13,8 +13,7 @@ import FormControl from "@material-ui/core/FormControl";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 import { TimeSelect } from "components/Select";
-import { swrConfig } from "apis/config";
-import { fetcher } from "apis/TRA";
+import { swrConfig, fetcher } from "apis/config";
 import { getClosestStation } from "utils";
 import useGeoLocation from "hooks/useGeoLocation";
 

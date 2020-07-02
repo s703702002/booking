@@ -10,8 +10,7 @@ import TimelineDot from "@material-ui/lab/TimelineDot";
 import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
 import Typography from "@material-ui/core/Typography";
 
-import { swrConfig } from "apis/config";
-import { fetcher } from "apis/TRA";
+import { swrConfig, fetcher } from "apis/config";
 import Context from "components/TRA/context";
 
 const Station = ({ station, isFirstStaion, isLastStation }) => {

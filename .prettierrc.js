@@ -3,5 +3,6 @@ module.exports = {
   "tabWidth": 2,
   "trailingComma": "none",
   "bracketSpacing": true,
-  "parser": "babel"
+  "parser": "babel",
+  "singleQuote": true
 };

@@ -10,8 +10,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 
-import { swrConfig } from "apis/config";
-import { fetcher } from "apis/THSR";
+import { swrConfig, fetcher } from "apis/config";
 import SortIcon from "components/SortIcon";
 import BottomFooter from "components/BottomFooter";
 

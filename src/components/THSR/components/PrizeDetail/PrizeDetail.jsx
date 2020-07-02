@@ -1,20 +1,20 @@
-import React from "react";
-import useSWR from "swr";
+import React from 'react';
+import useSWR from 'swr';
 
-import { withStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
-import Typography from "@material-ui/core/Typography";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import { withStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
-import { fetcher } from "apis/THSR";
-import { swrConfig } from "apis/config";
+import { fetcher } from 'apis/config';
+import { swrConfig } from 'apis/config';
 
 const StyledTableCell = withStyles(theme => ({
   head: {

@@ -3,8 +3,7 @@ import useSWR from "swr";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-import { fetcher } from "apis/TRA";
-import { swrConfig } from "apis/config";
+import { swrConfig, fetcher } from "apis/config";
 
 const tripLine = {
   0: "不經山海線",

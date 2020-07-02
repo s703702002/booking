@@ -11,8 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 
 import Select, { TimeSelect } from "components/Select";
-import { swrConfig } from "apis/config";
-import { fetcher } from "apis/THSR";
+import { swrConfig, fetcher } from "apis/config";
 
 const SearchPanel = ({ onSearch, className }) => {
   const [date, setDate] = useState(format(Date.now(), "yyyy-MM-dd"));
