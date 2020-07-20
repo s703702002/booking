@@ -2,9 +2,16 @@ import React, { useState, Suspense } from 'react';
 import { Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 
+import ErrorBoundary from 'components/ErrorBoundary';
 import TrainDetail from './components/TrainDetail';
 import PrizeDetail from './components/PrizeDetail';
 import SearchPanel from './components/SearchPanel';
+
+const ErrorFallBack = (
+  <Typography align="center" variant="h6" color="error">
+    很抱歉，系統忙碌中
+  </Typography>
+);
 
 const THSR = () => {
   const [trainDate, setTrainDate] = useState('');
@@ -44,9 +51,11 @@ const THSR = () => {
           arrivalTime={arrivalTime}
         />
       </Suspense>
-      <Suspense fallback={<div>Get prize detail...</div>}>
-        <PrizeDetail departure={departure} arrival={arrival} />
-      </Suspense>
+      <ErrorBoundary fallback={ErrorFallBack}>
+        <Suspense fallback={<div>Get prize detail...</div>}>
+          <PrizeDetail departure={departure} arrival={arrival} />
+        </Suspense>
+      </ErrorBoundary>
     </Box>
   );
 };

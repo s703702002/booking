@@ -35,7 +35,7 @@ const PrizeDetail = ({ departure, arrival }) => {
     swrConfig
   );
 
-  const prizeList = data ? data[0].Fares : [];
+  const prizeList = data?.[0]?.Fares || [];
 
   if (prizeList.length < 1) return null;
 
