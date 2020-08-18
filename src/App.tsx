@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import * as React from 'react';
 
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -16,28 +15,16 @@ import {
   makeStyles,
   ThemeProvider
 } from '@material-ui/core/styles';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import GoTop from './components/GoTop';
 import THSR from './components/THSR';
 import TRA from './components/TRA';
+import TabPanel from './components/TabPanel';
 
 import useToggle from './hooks/useToggle';
 
-function TabPanel({ children, value, index, ...other }) {
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box pt={2}>{children}</Box>}
-    </div>
-  );
-}
+const { useState, useMemo } = React;
 
 const useStyles = makeStyles({
   list: {
@@ -45,7 +32,12 @@ const useStyles = makeStyles({
   }
 });
 
-const Lists = ({ toggleDrawer, onItemClick }) => {
+interface Props {
+  toggleDrawer: () => void;
+  onItemClick: (index: number) => void;
+}
+
+const Lists = ({ toggleDrawer, onItemClick }: Props) => {
   const classes = useStyles();
   return (
     <div

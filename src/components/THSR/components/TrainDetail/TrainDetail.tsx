@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import useSWR from 'swr';
 import { parseISO, isBefore, isAfter, compareAsc, compareDesc } from 'date-fns';
 
@@ -16,15 +16,40 @@ import BottomFooter from 'components/BottomFooter';
 
 import Row, { NoResults } from './components/Row';
 
+const { useState } = React;
+
+interface Props {
+  departure: string;
+  arrival: string;
+  trainDate: string;
+  departureTime: string;
+  arrivalTime: string;
+}
+
+interface ApiData {
+  DailyTrainInfo: {
+    TrainNo: string;
+  };
+  OriginStopTime: {
+    DepartureTime: string;
+  };
+  DestinationStopTime: {
+    ArrivalTime: string;
+  };
+}
+
+type sortBy = 'departure' | 'arrival';
+type order = 'desc' | 'asc';
+
 const TrainDetail = ({
   departure,
   arrival,
   trainDate,
   departureTime,
   arrivalTime
-}) => {
-  const [sortBy, setSortBy] = useState();
-  const [order, setOrder] = useState();
+}: Props) => {
+  const [sortBy, setSortBy] = useState<sortBy>('departure');
+  const [order, setOrder] = useState<order>('desc');
 
   const shouldFetch = departure && arrival && trainDate;
 
@@ -41,7 +66,7 @@ const TrainDetail = ({
   const arrFilterTime = parseISO(`${trainDate} ${arrivalTime}`);
 
   const trainDetails = data
-    ? data.filter(d => {
+    ? data.filter((d: ApiData) => {
         const depTime = parseISO(
           `${trainDate} ${d.OriginStopTime.DepartureTime}`
         );
@@ -64,7 +89,7 @@ const TrainDetail = ({
     setOrder(order === 'desc' ? 'asc' : 'desc');
   };
 
-  const renderList = trainDetails.sort((a, b) => {
+  const renderList = trainDetails.sort((a: ApiData, b: ApiData) => {
     if (sortBy === 'departure') {
       const aDepTime = parseISO(
         `${trainDate} ${a.OriginStopTime.DepartureTime}`
@@ -91,6 +116,8 @@ const TrainDetail = ({
       return true;
     }
   });
+
+  const updateTime = data && data[0] && data[0].UpdateTime;
 
   return (
     <>
@@ -119,7 +146,7 @@ const TrainDetail = ({
         </TableHead>
         <TableBody>
           {renderList.length > 0 ? (
-            renderList.map(detail => (
+            renderList.map((detail: ApiData) => (
               <Row
                 key={detail.DailyTrainInfo.TrainNo}
                 detail={detail}
@@ -132,7 +159,7 @@ const TrainDetail = ({
         </TableBody>
       </Table>
       <BottomFooter>
-        <Typography>更新時間: {data?.[0]?.UpdateTime || '---'}</Typography>
+        <Typography>更新時間: {updateTime || '---'}</Typography>
       </BottomFooter>
     </>
   );

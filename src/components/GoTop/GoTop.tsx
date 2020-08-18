@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,10 +22,8 @@ function ScrollTop() {
     threshold: 100
   });
 
-  const handleClick = event => {
-    const anchor = (event.target.ownerDocument || document).querySelector(
-      '#back-to-top-anchor'
-    );
+  const handleClick = () => {
+    const anchor = document.querySelector('#back-to-top-anchor');
 
     if (anchor) {
       anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
