@@ -11,6 +11,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 
 import { swrConfig, fetcher } from 'apis/config';
+import APIResponse from 'apis/api';
+
 import SortIcon from 'components/SortIcon';
 import BottomFooter from 'components/BottomFooter';
 
@@ -24,19 +26,6 @@ interface Props {
   trainDate: string;
   departureTime: string;
   arrivalTime: string;
-}
-
-interface ApiData {
-  UpdateTime: string;
-  DailyTrainInfo: {
-    TrainNo: string;
-  };
-  OriginStopTime: {
-    DepartureTime: string;
-  };
-  DestinationStopTime: {
-    ArrivalTime: string;
-  };
 }
 
 type sortBy = 'departure' | 'arrival';
@@ -55,7 +44,7 @@ const TrainDetail = ({
   const shouldFetch = departure && arrival && trainDate;
 
   // GET 取得指定[日期],[起迄站間]之時刻表資料
-  const { data } = useSWR<ApiData[]>(
+  const { data } = useSWR<APIResponse[]>(
     () =>
       shouldFetch &&
       `/v2/Rail/THSR/DailyTimetable/OD/${departure}/to/${arrival}/${trainDate}`,
@@ -102,7 +91,7 @@ const TrainDetail = ({
       return order === 'desc'
         ? compareDesc(aDepTime, bDepTime)
         : compareAsc(aDepTime, bDepTime);
-    } else if (sortBy === 'arrival') {
+    } else {
       const aArrTime = parseISO(
         `${trainDate} ${a.DestinationStopTime.ArrivalTime}`
       );
@@ -113,12 +102,10 @@ const TrainDetail = ({
       return order === 'desc'
         ? compareDesc(aArrTime, bArrTime)
         : compareAsc(aArrTime, bArrTime);
-    } else {
-      return 1;
     }
   });
 
-  const updateTime = data?.[0]?.UpdateTime;
+  const updateTime = data?.[0]?.UpdateTime || '---';
 
   return (
     <>
@@ -147,7 +134,7 @@ const TrainDetail = ({
         </TableHead>
         <TableBody>
           {renderList.length > 0 ? (
-            renderList.map((detail: ApiData) => (
+            renderList.map((detail) => (
               <Row
                 key={detail.DailyTrainInfo.TrainNo}
                 detail={detail}
@@ -160,7 +147,7 @@ const TrainDetail = ({
         </TableBody>
       </Table>
       <BottomFooter>
-        <Typography>更新時間: {updateTime || '---'}</Typography>
+        <Typography>更新時間: {updateTime}</Typography>
       </BottomFooter>
     </>
   );
