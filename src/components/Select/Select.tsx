@@ -1,8 +1,8 @@
-import React from 'react';
-import Select from '@material-ui/core/Select';
+import * as React from 'react';
+import Select, { SelectProps } from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-export const TimeSelect = (props) => (
+export const TimeSelect = (props: SelectProps) => (
   <Select {...props}>
     <MenuItem value="06:00">06:00</MenuItem>
     <MenuItem value="07:00">07:00</MenuItem>
@@ -26,7 +26,17 @@ export const TimeSelect = (props) => (
   </Select>
 );
 
-const Selector = ({ options, ...props }) => {
+interface options {
+  value: string;
+  Zh_tw: string;
+  En: string;
+}
+
+interface myProps extends SelectProps {
+  options: options[];
+}
+
+const Selector = ({ options, ...props }: myProps) => {
   return (
     <Select {...props}>
       {options.length > 0 ? (

@@ -43,8 +43,8 @@ const Lists = ({ toggleDrawer, onItemClick }: Props) => {
     <div
       className={classes.list}
       role="presentation"
-      onClick={() => toggleDrawer()}
-      onKeyDown={() => toggleDrawer()}
+      onClick={toggleDrawer}
+      onKeyDown={toggleDrawer}
     >
       <List>
         <ListItem button onClick={() => onItemClick(0)}>

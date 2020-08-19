@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import useSWR from 'swr';
 import { format, add } from 'date-fns';
 
@@ -18,8 +18,11 @@ import { getClosestStation } from 'utils';
 import useGeoLocation from 'hooks/useGeoLocation';
 
 import TrainTypeSelect from './components/TrainTypeSelect';
+import option from './components/TrainTypeSelect/TrainTypesSelect';
 
-const Option = (option) => {
+const { useState } = React;
+
+const Option = (option: any) => {
   return (
     <>
       {option.icon && (
@@ -30,7 +33,38 @@ const Option = (option) => {
   );
 };
 
-const SearchPanel = ({ onSearch }) => {
+interface panelValue {
+  date: string;
+  departure: any;
+  arrival: any;
+  departureTime: string;
+  arrivalTime: string;
+  trainType: any;
+}
+
+interface Props {
+  onSearch({
+    date,
+    departure,
+    arrival,
+    departureTime,
+    arrivalTime,
+    trainType
+  }: panelValue): void;
+}
+
+const types: Array<option> = [
+  { text: '不限', value: '0' },
+  { text: '太魯閣', value: '1' },
+  { text: '普悠瑪', value: '2' },
+  { text: '自強', value: '3' },
+  { text: '莒光', value: '4' },
+  { text: '復興', value: '5' },
+  { text: '區間', value: '6' },
+  { text: '普快', value: '7' }
+];
+
+const SearchPanel = ({ onSearch }: Props) => {
   const [date, setDate] = useState(format(Date.now(), 'yyyy-MM-dd'));
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
@@ -40,7 +74,7 @@ const SearchPanel = ({ onSearch }) => {
   const [arrivalTime, setArriveTime] = useState(
     format(add(Date.now(), { hours: 3 }), 'HH:00')
   );
-  const [trainType, setTrainType] = useState([{ text: '不限', value: '0' }]);
+  const [trainType, setTrainType] = useState<(string | option)[]>([types[0]]);
   const location = useGeoLocation();
 
   // GET 取得車站基本資料
@@ -51,7 +85,9 @@ const SearchPanel = ({ onSearch }) => {
   );
 
   // 過濾掉 台北-環島站
-  const filteredData = data ? data.filter((v) => v.StationID !== '1001') : [];
+  const filteredData = data
+    ? data.filter((v: any) => v.StationID !== '1001')
+    : [];
 
   const closestStation = getClosestStation(location, filteredData);
 
@@ -90,7 +126,6 @@ const SearchPanel = ({ onSearch }) => {
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">
             <Autocomplete
-              name="OrginStation"
               id="OrginStation"
               options={stations}
               onChange={(e, v) => setDeparture(v)}
@@ -119,7 +154,6 @@ const SearchPanel = ({ onSearch }) => {
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">
             <Autocomplete
-              name="DestinationStation"
               id="DestinationStation"
               options={stations}
               onChange={(e, v) => setArrival(v)}
@@ -141,7 +175,7 @@ const SearchPanel = ({ onSearch }) => {
               label="最早出發"
               labelId="DepartureTime"
               value={departureTime}
-              onChange={(e) => setDepartureTime(e.target.value)}
+              onChange={(e: any) => setDepartureTime(e.target.value)}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">
@@ -150,14 +184,18 @@ const SearchPanel = ({ onSearch }) => {
               label="最晚抵達"
               labelId="ArrivalTime"
               value={arrivalTime}
-              onChange={(e) => setArriveTime(e.target.value)}
+              onChange={(e: any) => setArriveTime(e.target.value)}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">
             <TrainTypeSelect
-              name="trainType"
               id="trainType"
+              defaultValue={trainType}
               onChange={(e, v) => setTrainType(v)}
+              options={types}
+              renderInput={(params) => (
+                <TextField {...params} variant="outlined" label="列車種類" />
+              )}
             />
           </FormControl>
           <FormControl fullWidth margin="normal">
