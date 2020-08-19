@@ -109,7 +109,10 @@ function App() {
         onClose={toggleDrawer}
         onOpen={toggleDrawer}
       >
-        <Lists toggleDrawer={toggleDrawer} onItemClick={item => setTab(item)} />
+        <Lists
+          toggleDrawer={toggleDrawer}
+          onItemClick={(item) => setTab(item)}
+        />
       </SwipeableDrawer>
       <TabPanel value={tab} index={0}>
         <THSR />

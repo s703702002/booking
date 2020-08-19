@@ -19,7 +19,7 @@ import useGeoLocation from 'hooks/useGeoLocation';
 
 import TrainTypeSelect from './components/TrainTypeSelect';
 
-const Option = option => {
+const Option = (option) => {
   return (
     <>
       {option.icon && (
@@ -51,12 +51,12 @@ const SearchPanel = ({ onSearch }) => {
   );
 
   // 過濾掉 台北-環島站
-  const filteredData = data ? data.filter(v => v.StationID !== '1001') : [];
+  const filteredData = data ? data.filter((v) => v.StationID !== '1001') : [];
 
   const closestStation = getClosestStation(location, filteredData);
 
   const stations = filteredData
-    ? [closestStation, ...filteredData].filter(v => v !== null)
+    ? [closestStation, ...filteredData].filter((v) => v !== null)
     : [];
 
   const depArrSwitch = () => {
@@ -83,7 +83,7 @@ const SearchPanel = ({ onSearch }) => {
               type="date"
               id="trip-start"
               value={date}
-              onChange={e => setDate(e.currentTarget.value)}
+              onChange={(e) => setDate(e.currentTarget.value)}
               variant="outlined"
               label="日期"
             />
@@ -95,7 +95,7 @@ const SearchPanel = ({ onSearch }) => {
               options={stations}
               onChange={(e, v) => setDeparture(v)}
               value={departure}
-              renderInput={params => (
+              renderInput={(params) => (
                 <TextField {...params} label="起站" variant="outlined" />
               )}
               renderOption={Option}
@@ -103,7 +103,7 @@ const SearchPanel = ({ onSearch }) => {
                 StationName.Zh_tw + ' ' + StationName.En
               }
               getOptionSelected={(o, v) => o.StationUID === v.StationUID}
-              getOptionDisabled={o => o.disabled}
+              getOptionDisabled={(o) => o.disabled}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth>
@@ -124,15 +124,15 @@ const SearchPanel = ({ onSearch }) => {
               options={stations}
               onChange={(e, v) => setArrival(v)}
               value={arrival}
-              renderInput={params => (
+              renderInput={(params) => (
                 <TextField {...params} label="迄站" variant="outlined" />
               )}
               renderOption={Option}
-              getOptionLabel={option =>
+              getOptionLabel={(option) =>
                 option.StationName.Zh_tw + ' ' + option.StationName.En
               }
               getOptionSelected={(o, v) => o.StationUID === v.StationUID}
-              getOptionDisabled={o => o.disabled}
+              getOptionDisabled={(o) => o.disabled}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">
@@ -141,7 +141,7 @@ const SearchPanel = ({ onSearch }) => {
               label="最早出發"
               labelId="DepartureTime"
               value={departureTime}
-              onChange={e => setDepartureTime(e.target.value)}
+              onChange={(e) => setDepartureTime(e.target.value)}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">
@@ -150,7 +150,7 @@ const SearchPanel = ({ onSearch }) => {
               label="最晚抵達"
               labelId="ArrivalTime"
               value={arrivalTime}
-              onChange={e => setArriveTime(e.target.value)}
+              onChange={(e) => setArriveTime(e.target.value)}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">

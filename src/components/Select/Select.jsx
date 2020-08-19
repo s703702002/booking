@@ -2,7 +2,7 @@ import React from 'react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-export const TimeSelect = props => (
+export const TimeSelect = (props) => (
   <Select {...props}>
     <MenuItem value="06:00">06:00</MenuItem>
     <MenuItem value="07:00">07:00</MenuItem>
@@ -30,7 +30,7 @@ const Selector = ({ options, ...props }) => {
   return (
     <Select {...props}>
       {options.length > 0 ? (
-        options.map(o => (
+        options.map((o) => (
           <MenuItem key={o.value} value={o.value}>
             {o.Zh_tw + o.En}
           </MenuItem>

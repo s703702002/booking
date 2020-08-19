@@ -27,6 +27,7 @@ interface Props {
 }
 
 interface ApiData {
+  UpdateTime: string;
   DailyTrainInfo: {
     TrainNo: string;
   };
@@ -54,7 +55,7 @@ const TrainDetail = ({
   const shouldFetch = departure && arrival && trainDate;
 
   // GET 取得指定[日期],[起迄站間]之時刻表資料
-  const { data } = useSWR(
+  const { data } = useSWR<ApiData[]>(
     () =>
       shouldFetch &&
       `/v2/Rail/THSR/DailyTimetable/OD/${departure}/to/${arrival}/${trainDate}`,
@@ -66,7 +67,7 @@ const TrainDetail = ({
   const arrFilterTime = parseISO(`${trainDate} ${arrivalTime}`);
 
   const trainDetails = data
-    ? data.filter((d: ApiData) => {
+    ? data.filter((d) => {
         const depTime = parseISO(
           `${trainDate} ${d.OriginStopTime.DepartureTime}`
         );
@@ -89,7 +90,7 @@ const TrainDetail = ({
     setOrder(order === 'desc' ? 'asc' : 'desc');
   };
 
-  const renderList = trainDetails.sort((a: ApiData, b: ApiData) => {
+  const renderList = trainDetails.sort((a, b) => {
     if (sortBy === 'departure') {
       const aDepTime = parseISO(
         `${trainDate} ${a.OriginStopTime.DepartureTime}`
@@ -113,11 +114,11 @@ const TrainDetail = ({
         ? compareDesc(aArrTime, bArrTime)
         : compareAsc(aArrTime, bArrTime);
     } else {
-      return true;
+      return 1;
     }
   });
 
-  const updateTime = data && data[0] && data[0].UpdateTime;
+  const updateTime = data?.[0]?.UpdateTime;
 
   return (
     <>

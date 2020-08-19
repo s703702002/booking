@@ -15,7 +15,7 @@ import Paper from '@material-ui/core/Paper';
 
 import { fetcher, swrConfig } from 'apis/config';
 
-const StyledTableCell = withStyles(theme => ({
+const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white
@@ -64,7 +64,7 @@ const PrizeDetail = ({ departure, arrival }) => {
           </TableHead>
           <TableBody>
             <TableRow>
-              {prizeList.map(v => (
+              {prizeList.map((v) => (
                 <TableCell key={v.Price}>
                   {v.TicketType}: <strong>{v.Price}</strong> 元
                 </TableCell>

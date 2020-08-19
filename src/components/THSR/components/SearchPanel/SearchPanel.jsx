@@ -28,7 +28,7 @@ const SearchPanel = ({ onSearch, className }) => {
   const { data } = useSWR('/v2/Rail/THSR/Station', fetcher, swrConfig);
 
   const stations = data
-    ? data.map(val => ({
+    ? data.map((val) => ({
         value: val.StationID,
         ...val.StationName
       }))
@@ -57,7 +57,7 @@ const SearchPanel = ({ onSearch, className }) => {
               type="date"
               id="trip-start"
               value={date}
-              onChange={e => setDate(e.currentTarget.value)}
+              onChange={(e) => setDate(e.currentTarget.value)}
               variant="outlined"
               label="日期"
             />
@@ -69,7 +69,7 @@ const SearchPanel = ({ onSearch, className }) => {
               labelId="OrginStation"
               options={stations}
               value={departure}
-              onChange={e => setDeparture(e.target.value)}
+              onChange={(e) => setDeparture(e.target.value)}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth>
@@ -90,7 +90,7 @@ const SearchPanel = ({ onSearch, className }) => {
               labelId="DestinationStation"
               options={stations}
               value={arrival}
-              onChange={e => setArrival(e.target.value)}
+              onChange={(e) => setArrival(e.target.value)}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">
@@ -99,7 +99,7 @@ const SearchPanel = ({ onSearch, className }) => {
               label="最早出發"
               labelId="DepartureTime"
               value={departureTime}
-              onChange={e => setDepartureTime(e.target.value)}
+              onChange={(e) => setDepartureTime(e.target.value)}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">
@@ -108,7 +108,7 @@ const SearchPanel = ({ onSearch, className }) => {
               label="最晚抵達"
               labelId="ArrivalTime"
               value={arrivalTime}
-              onChange={e => setArriveTime(e.target.value)}
+              onChange={(e) => setArriveTime(e.target.value)}
             />
           </FormControl>
           <FormControl fullWidth margin="normal">

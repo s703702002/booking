@@ -10,8 +10,8 @@ const getFetchOptions = () => ({
   }
 });
 
-export const fetcher = url =>
-  fetch(API_BASE + url, getFetchOptions()).then(r => r.json());
+export const fetcher = (url) =>
+  fetch(API_BASE + url, getFetchOptions()).then((r) => r.json());
 
 export const swrConfig = {
   suspense: true,

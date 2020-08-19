@@ -1,6 +1,6 @@
-const toRad = value => (value * Math.PI) / 180;
+const toRad = (value) => (value * Math.PI) / 180;
 
-const robustAcos = value => {
+const robustAcos = (value) => {
   if (value > 1) {
     return 1;
   }
@@ -17,7 +17,7 @@ export const getClosestStation = (myLocation, stations) => {
 
   if (!myLocation || myLocation.error || !stations.length) return null;
 
-  stations.forEach(station => {
+  stations.forEach((station) => {
     const earthRadius = 6378137;
     const fromLat = myLocation.latitude;
     const fromLon = myLocation.longitude;

@@ -19,13 +19,13 @@ const types = [
   { text: '普快', value: '7' }
 ];
 
-const TrainTypeSelect = props => {
+const TrainTypeSelect = (props) => {
   return (
     <Autocomplete
       multiple
       options={types}
       disableCloseOnSelect
-      getOptionLabel={option => option.text}
+      getOptionLabel={(option) => option.text}
       defaultValue={[types[0]]}
       limitTags={2}
       renderOption={(option, { selected }) => (
@@ -39,7 +39,7 @@ const TrainTypeSelect = props => {
           {option.text}
         </>
       )}
-      renderInput={params => (
+      renderInput={(params) => (
         <TextField {...params} variant="outlined" label="列車種類" />
       )}
       {...props}

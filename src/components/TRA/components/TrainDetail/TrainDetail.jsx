@@ -51,12 +51,12 @@ const TrainDetail = ({
     setOrder(order === 'desc' ? 'asc' : 'desc');
   };
 
-  const trainTypeFilter = trainType.map(v => v.value);
+  const trainTypeFilter = trainType.map((v) => v.value);
   const shouldFilterByTrainType = !trainTypeFilter.includes('0');
 
   const trainDetails = data
     ? data
-        .filter(d => {
+        .filter((d) => {
           const depTime = parseISO(
             `${trainDate} ${d.OriginStopTime.DepartureTime}`
           );
@@ -67,7 +67,7 @@ const TrainDetail = ({
             isAfter(depTime, depFilterTime) && isBefore(arrTime, arrFilterTime)
           );
         })
-        .filter(d => {
+        .filter((d) => {
           if (!shouldFilterByTrainType) return true;
           return trainTypeFilter.includes(d.DailyTrainInfo.TrainTypeCode);
         })
@@ -128,7 +128,7 @@ const TrainDetail = ({
         </TableHead>
         <TableBody>
           {renderList.length > 0 ? (
-            renderList.map(detail => (
+            renderList.map((detail) => (
               <Row key={detail.DailyTrainInfo.TrainNo} detail={detail} />
             ))
           ) : (
