@@ -18,7 +18,8 @@ import { getClosestStation } from 'utils';
 import useGeoLocation from 'hooks/useGeoLocation';
 
 import TrainTypeSelect from './components/TrainTypeSelect';
-import option from './components/TrainTypeSelect/TrainTypesSelect';
+import { option } from './components/TrainTypeSelect/TrainTypesSelect';
+import SearchPanelProps from './types';
 
 const { useState } = React;
 
@@ -33,26 +34,6 @@ const Option = (option: any) => {
   );
 };
 
-interface panelValue {
-  date: string;
-  departure: any;
-  arrival: any;
-  departureTime: string;
-  arrivalTime: string;
-  trainType: any;
-}
-
-interface Props {
-  onSearch({
-    date,
-    departure,
-    arrival,
-    departureTime,
-    arrivalTime,
-    trainType
-  }: panelValue): void;
-}
-
 const types: Array<option> = [
   { text: '不限', value: '0' },
   { text: '太魯閣', value: '1' },
@@ -64,14 +45,14 @@ const types: Array<option> = [
   { text: '普快', value: '7' }
 ];
 
-const SearchPanel = ({ onSearch }: Props) => {
+const SearchPanel = ({ onSearch }: SearchPanelProps) => {
   const [date, setDate] = useState(format(Date.now(), 'yyyy-MM-dd'));
   const [departure, setDeparture] = useState(null);
   const [arrival, setArrival] = useState(null);
-  const [departureTime, setDepartureTime] = useState(
+  const [departureTime, setDepartureTime] = useState<string>(
     format(Date.now(), 'HH:00')
   );
-  const [arrivalTime, setArriveTime] = useState(
+  const [arrivalTime, setArriveTime] = useState<string>(
     format(add(Date.now(), { hours: 3 }), 'HH:00')
   );
   const [trainType, setTrainType] = useState<(string | option)[]>([types[0]]);
@@ -175,7 +156,7 @@ const SearchPanel = ({ onSearch }: Props) => {
               label="最早出發"
               labelId="DepartureTime"
               value={departureTime}
-              onChange={(e: any) => setDepartureTime(e.target.value)}
+              onChange={(e) => setDepartureTime(String(e.target.value))}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">
@@ -184,7 +165,7 @@ const SearchPanel = ({ onSearch }: Props) => {
               label="最晚抵達"
               labelId="ArrivalTime"
               value={arrivalTime}
-              onChange={(e: any) => setArriveTime(e.target.value)}
+              onChange={(e) => setArriveTime(String(e.target.value))}
             />
           </FormControl>
           <FormControl margin="normal" fullWidth variant="outlined">
@@ -193,9 +174,6 @@ const SearchPanel = ({ onSearch }: Props) => {
               defaultValue={trainType}
               onChange={(e, v) => setTrainType(v)}
               options={types}
-              renderInput={(params) => (
-                <TextField {...params} variant="outlined" label="列車種類" />
-              )}
             />
           </FormControl>
           <FormControl fullWidth margin="normal">

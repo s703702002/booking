@@ -1,15 +1,18 @@
 import * as React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
-import Autocomplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import TextField from '@material-ui/core/TextField';
 
-import option from './TrainTypesSelect';
+import TrainTypeSelectProps, { option } from './TrainTypesSelect';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function TrainTypeSelect(props: AutocompleteProps<option, true, true, true>) {
+function TrainTypeSelect(
+  props: TrainTypeSelectProps<option, true, true, true>
+) {
   return (
     <Autocomplete
       {...props}
@@ -17,6 +20,9 @@ function TrainTypeSelect(props: AutocompleteProps<option, true, true, true>) {
       disableCloseOnSelect
       getOptionLabel={(option) => option.text}
       limitTags={2}
+      renderInput={(params) => (
+        <TextField {...params} variant="outlined" label="列車種類" />
+      )}
       renderOption={(option, { selected }) => (
         <>
           <Checkbox
